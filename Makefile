@@ -6,7 +6,7 @@
 #    By: esouza <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 15:15:48 by esouza            #+#    #+#              #
-#    Updated: 2019/10/23 16:27:29 by esouza           ###   ########.fr        #
+#    Updated: 2019/10/23 17:24:18 by esouza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,21 +23,23 @@ SRC_DIR = srcs
 
 OBJ_DIR = objs
 
-INLCUDE_DIR = includes
+INCLUDE_DIR = includes
+
+HEADER = $(INCLUDE_DIR)/malloc.h
 
 SRCS = main.c
 
-CC = gcc  -Iinlcludes/malloc.h
+CC = gcc  -I $(INCLUDE_DIR)/malloc.h
 
 AR = ar rcs
 
 OBJS = $(SRCS:.c=.o)
 
-#OBJS = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC)))
+#OBJS = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_DIR)))
 
 CFLAGS = -Wall -Werror -Wextra -Iincludes
 
-$(NAME): $(OBJS:%.o=$(OBJ_DIR)/%.o) Makefile
+$(NAME): $(OBJS:%.o=$(OBJ_DIR)/%.o) $(HEADER) Makefile
 	@$(AR) $@ $(OBJS:%.o=$(OBJ_DIR)/%.o)
 	@ln -sf $(NAME) $(LINK)
 	@echo "\033[0;36m            ==== Creating Library ===="
