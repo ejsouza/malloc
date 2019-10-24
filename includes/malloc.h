@@ -13,5 +13,11 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <sys/resource.h>
+#include <pthread.h>
+
 int						main(void);
 #endif
