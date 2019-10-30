@@ -1,35 +1,63 @@
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <sys/resource.h>
-#include <pthread.h>
-#include <stdio.h> // to be deleteted
-#include <string.h> // to be deleted
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/29 11:36:39 by esouza            #+#    #+#             */
+/*   Updated: 2019/10/30 15:32:25 by esouza           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int				main(void)
+#include "includes/malloc.h"
+#include <stdlib.h>
+#include <string.h>
+
+t_block				block;
+
+int					main(int argc, char **argv)
 {
-	char *addr;
-	int		pagesize;
-	int		i;
-
-	pagesize = getpagesize();
-	i = 0;
-	/*
-	 * MMAP does return by pages, i.e here pagesize = 4096
-	 * so no other number will be taken in account, if you put 4097 for example
-	 * it will actually give you 2 pages or 4096 * 2 = 8192 and so on.
-	 */
-	addr = (char *) mmap(0, pagesize, PROT_READ | PROT_WRITE | PROT_EXEC,
-			MAP_ANON | MAP_PRIVATE, -1, 0 );
+	char		*addr;
+	int			i;
+	t_chunk		chunk;
 	
-	while (i < pagesize - 1)
+	if (argc != 2)
 	{
-		addr[i] = 'x';
+		printf("usage %s <size>\n", argv[0]);
+		return (1);
+	}
+//	printf("size of chunk = %zu\n", sizeof(t_chunk));
+//	printf("before calling malloc\n");
+	addr = (char *) malloc(atoi(argv[1]));
+	block.data =  malloc(atoi(argv[1]) * getpagesize());
+	strcpy(block.data, "Hello world!");
+	printf("%s\n", block.data);
+	printf("%p\t%c\n", block.data, (*(char *)block.data));
+
+	for (i = 0; i < strlen("Hello world!"); i++)
+	{
+		printf("Addr %p\tValue %c\n", (char *)block.data + i, (*(char *)(block.data + i)));
+	}
+	printf("i = %d\n", getpagesize());
+	while (i < 4095)
+	{
+		(*(char *)(block.data + i)) = 'x';
 		i++;
 	}
-	addr[pagesize - 2] = 'X';
-	printf("%s\n", addr);
-	printf("len = %lu\taddress %p\tpagesize - 1 = %i\n", strlen(addr), addr,
-			pagesize - 1);
+	memcpy((char *)block.data + 4076, (char *)"HELLO MOTHER FUCKER!", 20);
+	printf("\n************************************************************\n");
+	printf("%s\n", block.data);
+	/*
+	printf("after calling malloc\n");
+	if (addr == NULL)
+	{
+		printf("Malloc failed\n");
+		return (1);
+	}
+	addr[4095] = 42;
+	printf("Addr = %c", addr[4095]);
+	printf("start addres of memory %p\tbinary %p\n", addr, addr + 1);
+	*/
 	return (0);
 }
