@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   get_mblock.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 11:18:54 by esouza            #+#    #+#             */
-/*   Updated: 2019/10/31 16:02:54 by esouza           ###   ########.fr       */
+/*   Created: 2019/10/31 14:39:03 by esouza            #+#    #+#             */
+/*   Updated: 2019/10/31 14:53:02 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-t_block						head;
-
-void						*malloc(size_t size)
+static size_t			define_bins_size(size_t size)
 {
-	void					*addr;
-// check shall be made in this way, malloc returns a page for size = 0
-	if (size < 0)
-		return (NULL);
-	if ((addr = request_handler(size, &head)) == NULL || addr == MAP_FAILED)
-		return (NULL);
-	return (addr);
+	if (size <= TINY)
+		return ((size_t)TINY);
+	else if (size <= SMALL)
+		return ((size_t)SMALL);
+	return (size);
 }
 
+void				*get_mblock(size_t size)
+{
+	void			*addr;
+
+	addr = mmap(NULL, define_bins_size(size), PROT_READ | PROT_WRITE, MAP_ANON
+			| MAP_PRIVATE, -1, 0);
+	return (addr);
+}

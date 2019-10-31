@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:40 by esouza            #+#    #+#             */
-/*   Updated: 2019/10/30 11:49:02 by esouza           ###   ########.fr       */
+/*   Updated: 2019/10/31 15:59:58 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <sys/resource.h>
 # include <pthread.h>
-# include <stddef.h>
+//# include <stddef.h>
 #include <stdio.h> //to be deleted
 
 # define TINY			1028 * 4096
@@ -35,7 +35,9 @@ typedef struct			s_chunk
 typedef struct			s_block
 {
 	size_t				block_size;
+	short				mmap_calls;
 	void				*data;
+	void				*start;
 	struct s_block		*next;
 	struct s_block		*previous;
 }						t_block;
@@ -45,6 +47,9 @@ void 					*malloc(size_t size);
 void 					*realloc(void *ptr, size_t size);
 void					free(void *ptr);
 void 					show_alloc_mem(void);
+void					*get_mblock(size_t size);
+
+void					*request_handler(size_t size, t_block *head);
 
 size_t					ft_strlen(const char *s);
 void					ft_putstr(char *str);

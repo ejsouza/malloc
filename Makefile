@@ -6,7 +6,7 @@
 #    By: esouza <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 15:15:48 by esouza            #+#    #+#              #
-#    Updated: 2019/10/29 11:42:49 by esouza           ###   ########.fr        #
+#    Updated: 2019/10/31 14:38:43 by esouza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ INCLUDE_DIR = includes
 
 HEADER = $(INCLUDE_DIR)/malloc.h
 
-SRCS = malloc.c ft_strlen.c
+SRCS = malloc.c ft_strlen.c request_handler.c get_mblock.c
 
 CC = gcc  -I $(INCLUDE_DIR)/malloc.h
 
