@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:40 by esouza            #+#    #+#             */
-/*   Updated: 2019/10/31 15:59:58 by esouza           ###   ########.fr       */
+/*   Updated: 2019/10/31 16:33:44 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 //# include <stddef.h>
 #include <stdio.h> //to be deleted
 
-# define TINY			1028 * 4096
+# define TINY			1024 * 4096
 # define SMALL			4096 * 4096
 
 typedef struct			s_chunk
@@ -47,7 +47,7 @@ void 					*malloc(size_t size);
 void 					*realloc(void *ptr, size_t size);
 void					free(void *ptr);
 void 					show_alloc_mem(void);
-void					*get_mblock(size_t size);
+void					*get_mblock(size_t size, t_block *head);
 
 void					*request_handler(size_t size, t_block *head);
 
