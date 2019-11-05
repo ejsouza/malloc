@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:40 by esouza            #+#    #+#             */
-/*   Updated: 2019/10/31 16:33:44 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/05 16:04:33 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@
 //# include <stddef.h>
 #include <stdio.h> //to be deleted
 
-# define TINY			1024 * 4096
-# define SMALL			4096 * 4096
+# define TINY			0
+# define SMALL			1
+# define LARGE			2
+# define MIN_ALLOC		100
+# define NB_ZONE		3
+# define T_ZONE			1028
+# define S_ZONE			4096
 
 typedef struct			s_chunk
 {
@@ -35,11 +40,8 @@ typedef struct			s_chunk
 typedef struct			s_block
 {
 	size_t				block_size;
-	short				mmap_calls;
-	void				*data;
-	void				*start;
+	struct s_block		*start;
 	struct s_block		*next;
-	struct s_block		*previous;
 }						t_block;
 
 
@@ -47,9 +49,9 @@ void 					*malloc(size_t size);
 void 					*realloc(void *ptr, size_t size);
 void					free(void *ptr);
 void 					show_alloc_mem(void);
-void					*get_mblock(size_t size, t_block *head);
 
-void					*request_handler(size_t size, t_block *head);
+void					*handler_request(size_t size, t_block *zone[NB_ZONE]);
+
 
 size_t					ft_strlen(const char *s);
 void					ft_putstr(char *str);

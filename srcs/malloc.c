@@ -6,21 +6,19 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:18:54 by esouza            #+#    #+#             */
-/*   Updated: 2019/10/31 16:02:54 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/05 16:58:09 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-t_block						head;
+t_block						*zone[NB_ZONE];
 
 void						*malloc(size_t size)
 {
-	void					*addr;
-// check shall be made in this way, malloc returns a page for size = 0
-	if (size < 0)
-		return (NULL);
-	if ((addr = request_handler(size, &head)) == NULL || addr == MAP_FAILED)
+	void			*addr;
+
+	if ((addr = handler_request(size, zone)) == MAP_FAILED)
 		return (NULL);
 	return (addr);
 }
