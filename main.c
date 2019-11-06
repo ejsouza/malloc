@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:36:39 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/05 16:59:42 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/06 14:22:05 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int					main(int argc, char **argv)
 	}
 
 	addr[4095] = 42;
-	printf("Addr = %c\n", addr[4095]);
-	printf("start addres of memory %p\n", addr);
 	addr = malloc(42);
 	addr = malloc(42);
 	addr = malloc(42);
-	addr = malloc(42);
+	//addr = malloc(4096);
+	//addr = malloc(4096);
+	addr = malloc(4096);
 	return (0);
 }

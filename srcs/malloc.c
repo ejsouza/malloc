@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:18:54 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/05 16:58:09 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/06 13:25:32 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void						*malloc(size_t size)
 {
 	void			*addr;
 
-	if ((addr = handler_request(size, zone)) == MAP_FAILED)
+	if ((addr = handler_request(size, &zone[NB_ZONE])) == MAP_FAILED)
 		return (NULL);
 	return (addr);
 }

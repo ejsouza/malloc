@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 11:25:27 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/05 17:30:55 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/06 14:40:19 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ t_block		*malloc_zone(short index)
 	t_block		*zone;
 	int			size_zone;
 
-	printf("Enter  malloc_zone()\n");
 	size_zone = index == 0 ? T_ZONE : S_ZONE;
 	zone = (t_block *) mmap(NULL, size_zone * MIN_ALLOC, PROT_READ
 				| PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (zone != MAP_FAILED && zone != NULL)
 		initialize_zone(zone, size_zone);
-
 	return (zone);
 }
 
@@ -49,8 +47,6 @@ static void		link_block(t_block *addr, t_block *zone[NB_ZONE], short index)
 	int			i;
 
 	tmp = zone[index];
-	if (tmp == NULL)
-		printf("NULL NULL\n");
 	i = 0;
 	while (zone[index]->next != NULL)
 	{
@@ -59,9 +55,11 @@ static void		link_block(t_block *addr, t_block *zone[NB_ZONE], short index)
 	}
 	zone[index]->next = addr;
 	zone[index] = tmp;
-	if (addr == NULL)
-		printf("Fuck ya\n");
-	printf("enters and leave\t len %d\n", i);
+	printf("i = %d\tblock_size %zu\n", i, zone[index]->block_size);
+	printf("--------------ADDRESS---------------\n");
+	printf("zone[%p]\n", zone[index]);
+	printf("size[%p]\n", &zone[index]->block_size);
+	printf("------------------------------------\n");
 }
 
 void			*handler_request(size_t size, t_block *zone[NB_ZONE])
@@ -84,7 +82,8 @@ void			*handler_request(size_t size, t_block *zone[NB_ZONE])
 	else
 	{
 		addr = malloc_zone(index);
-		link_block(addr, &zone[index], index);
+		if (addr != NULL && addr != MAP_FAILED)
+			link_block(addr, zone, index);
 	}
 	return (addr);
 }
