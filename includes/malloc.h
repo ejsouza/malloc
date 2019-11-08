@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:40 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/06 14:51:42 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/08 17:19:47 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <unistd.h>
 # include <sys/resource.h>
 # include <pthread.h>
-//# include <stddef.h>
 #include <stdio.h> //to be deleted
 
 # define TINY			0
@@ -26,7 +25,7 @@
 # define LARGE			2
 # define MIN_ALLOC		100
 # define NB_ZONE		3
-# define T_ZONE			1028
+# define T_ZONE			1024
 # define S_ZONE			4096
 
 typedef struct			s_chunk
@@ -51,7 +50,8 @@ void					free(void *ptr);
 void 					show_alloc_mem(void);
 
 void					*handler_request(size_t size, t_block *zone[NB_ZONE]);
-
+short					zone_size(size_t size);
+t_block					*malloc_zone(short index);
 
 size_t					ft_strlen(const char *s);
 void					ft_putstr(char *str);

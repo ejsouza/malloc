@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:36:39 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/06 14:22:05 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/08 14:39:54 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 int					main(int argc, char **argv)
 {
 	char		*addr;
+	char		*addr1;
+	char		*addr2;
+	char		*addr3;
 	int			i;
 	
 	if (argc != 2)
@@ -30,11 +33,16 @@ int					main(int argc, char **argv)
 		printf("Malloc failed\n");
 		return (1);
 	}
-
-	addr[4095] = 42;
-	addr = malloc(42);
-	addr = malloc(42);
-	addr = malloc(42);
+//	addr[4095] = 42;
+	addr1 = malloc(42);
+	addr1[0] = 42;
+	printf("<<<%p>>>\n", addr1);
+	printf(">>>%p<<<\n", addr1 - 24);
+	addr2 = malloc(42);
+	addr2[0] = 42;
+	printf("<<<%p>>>\n", addr2);
+	printf(">>>%p<<<\n", addr2 - 24);
+	addr3 = malloc(42);
 	//addr = malloc(4096);
 	//addr = malloc(4096);
 	addr = malloc(4096);
