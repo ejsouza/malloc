@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 11:25:27 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/08 17:22:18 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/12 12:49:58 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ void			*handler_request(size_t size, t_block *zone[NB_ZONE])
 	else
 	{
 		addr = malloc_zone(index);
-		if (addr != NULL && addr != MAP_FAILED)
-			link_block(addr, zone, index);
+		if (addr == NULL || addr == MAP_FAILED)
+			return (NULL);
+		link_block(addr, zone, index);
 	}
 	return (addr->start);
 }

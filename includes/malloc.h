@@ -6,7 +6,7 @@
 /*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:40 by esouza            #+#    #+#             */
-/*   Updated: 2019/11/08 17:19:47 by esouza           ###   ########.fr       */
+/*   Updated: 2019/11/12 12:39:06 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ typedef struct			s_chunk
 
 typedef struct			s_block
 {
-	struct s_block		*start;
+	void				*start;
 	struct s_block		*next;
+	struct s_block		*previous;
 	size_t				block_size;
+	_Bool				free;
 }						t_block;
 
 
