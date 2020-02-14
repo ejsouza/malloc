@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: esouza <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/23 15:15:48 by esouza            #+#    #+#              #
-#    Updated: 2019/10/31 14:38:43 by esouza           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
@@ -27,7 +15,8 @@ INCLUDE_DIR = includes
 
 HEADER = $(INCLUDE_DIR)/malloc.h
 
-SRCS = malloc.c ft_strlen.c request_handler.c get_mblock.c
+SRCS = 	ft_malloc.c alloc_handler.c link_zones.c find_free_space.c \
+		ft_free.c free_block.c split_chunk.c
 
 CC = gcc  -I $(INCLUDE_DIR)/malloc.h
 

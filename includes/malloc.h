@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   malloc.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: esouza <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 15:24:40 by esouza            #+#    #+#             */
-/*   Updated: 2019/10/31 16:33:44 by esouza           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MALLOC_H
 # define MALLOC_H
 
@@ -18,40 +6,53 @@
 # include <unistd.h>
 # include <sys/resource.h>
 # include <pthread.h>
-//# include <stddef.h>
 #include <stdio.h> //to be deleted
 
-# define TINY			1024 * 4096
-# define SMALL			4096 * 4096
+
+# define ONE			1
+# define TWO			2
+# define TINY			0
+# define SMALL			1
+# define LARGE			2
+# define NB_ZONE		3
+# define MIN_ALLOC		100
+# define T_ZONE			1024
+# define S_ZONE			4096
+
+# define PAGES_T		(getpagesize() * 26)
+# define PAGES_S		(getpagesize() * 101)
 
 typedef struct			s_chunk
 {
-	size_t				chunk_size;
-	_Bool				free;
 	struct s_chunkc		*next;
-	struct s_chunk		*previous;
+	struct s_chunk		*prev;
+	size_t				size;
+	_Bool				free;
 }						t_chunk;
 
 typedef struct			s_block
 {
-	size_t				block_size;
-	short				mmap_calls;
-	void				*data;
-	void				*start;
 	struct s_block		*next;
-	struct s_block		*previous;
-}						t_block;
+	size_t				blc_size;
+}				t_block;
 
+t_block				*g_zone[NB_ZONE];
 
-void 					*malloc(size_t size);
-void 					*realloc(void *ptr, size_t size);
-void					free(void *ptr);
-void 					show_alloc_mem(void);
-void					*get_mblock(size_t size, t_block *head);
+void				*ft_malloc(size_t size); // clean the ft_ from the function name
+void				ft_free(void *ptr);		// Dito
+void				*realloc(void *ptr, size_t size);
+void				show_alloc_mem(void);
 
-void					*request_handler(size_t size, t_block *head);
-
-size_t					ft_strlen(const char *s);
-void					ft_putstr(char *str);
+void				*alloc_handler(size_t size, short inde);
+void				*link_zones(t_block *new_zone, size_t size
+		, short index);
+void				*find_free_space(size_t size, short index);
+void				init_chunk(t_chunk **chunk, size_t size);
+void				*init_chunk_header(t_chunk **chunk, size_t size);
+void				update_size_block_head(t_chunk *start); // not in use
+void				size_header_update(t_chunk *curr, t_chunk *next);
+void				free_block(t_block *block_head, size_t size);
+void				*split_chunk(t_chunk *chunk, size_t size);
+size_t				round_block(size_t size);
 
 #endif
