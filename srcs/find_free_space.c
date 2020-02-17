@@ -12,6 +12,7 @@
 
 
 #include "../includes/malloc.h"
+#include <stdlib.h> // todelete 
 
 void		update_size_block_head(t_chunk *start)
 {
@@ -35,6 +36,8 @@ void	size_header_update(t_chunk *curr, t_chunk *next)
 	t_chunk		*current;
 	size_t		size;
 
+	if (next == NULL)
+		;
 //	size = curr->size + next->size + sizeof(t_chunk);
 	size = curr->size;
 	current = curr;
@@ -42,7 +45,6 @@ void	size_header_update(t_chunk *curr, t_chunk *next)
 		current = current->prev;
 	head = (t_block *)current - ONE;
 	head->blc_size += size;
-	printf("========size[%zu] - sizeof{%zu}===blc_size[%zu]=== size->next{%zu}\n", size, size - sizeof(t_chunk), head->blc_size, next->size);
 }
 
 void	*init_chunk_header(t_chunk **chunk, size_t size)
@@ -50,7 +52,7 @@ void	*init_chunk_header(t_chunk **chunk, size_t size)
 	t_chunk	*tmp_chunk;
 	void	*tmp_void;
 	t_chunk *addr;
-	size_t plus_bytes;
+	size_t	plus_bytes;
 
 	plus_bytes = sizeof(t_chunk);
 	tmp_void = (void *)(*chunk);
@@ -70,6 +72,7 @@ static void	*find_chunk(t_chunk **chunk, size_t size, short index, t_block *star
 	size_t	base;
 	int	size_pages;
 	t_chunk	*curr;
+	// t_chunk	*tmp;
 
 	size_pages = (index == TINY) ? PAGES_T : PAGES_S;
 	addr = NULL;
@@ -78,29 +81,62 @@ static void	*find_chunk(t_chunk **chunk, size_t size, short index, t_block *star
 	curr = (*chunk);
 	while (curr != NULL)
 	{
-		if (curr->free && (((base + size_pages) - (size_t)curr) >= (size + sizeof(t_chunk))))
+		// printf("hell\n");
+		// if (curr->free && (((base + size_pages) - (size_t)curr) >= (size + sizeof(t_chunk))))
+		// {
+		// 	tmp = (t_chunk *)curr->next;
+		// 	if (curr->size > (size + sizeof(t_chunk)) && tmp != NULL)
+		// 	{
+		// 		printf("BEFORE CALLING SPLIT WHAT IS THE SIZE OF CURR %zu\n", curr->size);
+		// 		addr = split_chunk(curr, size);
+		// 		printf("Address after calling split %p\n", addr);
+		// 	}
+		// 	else if (curr->size == size)
+		// 	{
+		// 		curr->free = 0;
+		// 		return (curr + ONE);
+		// 	}
+		// 	else
+		// 	{
+		// 		printf("foo curr->size %zu requested size = %zu\n", curr->size, size);
+		// 		addr = init_chunk_header(&curr, size);
+		// 	}
+		// 	start->blc_size -= (size + sizeof(t_chunk));
+		// 	return (addr);
+		// }
+		if (curr->free)
 		{
-			if (curr->size > (size + sizeof(t_chunk)))
-			{
-				printf("BEFORE CALLING SPLIT WHAT IS THE SIZE OF CURR %zu\n", curr->size);
-				addr = split_chunk(curr, size);
-				printf("Address after calling split %p\n", addr);
-			}
-			else if (curr->size == size)
+		//	printf("addr((%p))__((%zu))size__((%p))curr->next\n", curr, curr->size, curr->next);
+			if (curr->size == size)
 			{
 				curr->free = 0;
-				return (curr + ONE);
+				addr = curr + ONE;
+			}
+			else if (curr->size > (size + sizeof(t_chunk)) && curr->next == NULL)
+			{
+		//		printf("ENTER HERE?\n");
+				// Pay attention to the end of the block
+				addr = split_chunk(curr, size);
+			}
+			else if (curr->size > (size + sizeof(t_chunk)) && curr->next != NULL)
+			{
+		//		printf("calling split_to_midlle(curr %p, size %zu)\n", curr, size);
+				addr = split_to_midlle(curr, size);
 			}
 			else
 			{
-				printf("foo curr->size %zu requested size = %zu\n", curr->size, size);
-				addr = init_chunk_header(&curr, size);
+		//		printf("NONE OF THE CONDITIONS ABOVE WORKS :(\n");
+		//		printf("{ size(%zu) curr->size(%zu) }\n", size, curr->size);
+				curr = (t_chunk *)curr->next;
 			}
-			start->blc_size -= (size + sizeof(t_chunk));
-			return (addr);
 		}
 		else
 			curr = (t_chunk *)curr->next;
+		if (addr != NULL)
+		{
+			start->blc_size -= size + sizeof(t_chunk);
+			return (addr);
+		}
 	}
 	return (addr);
 }

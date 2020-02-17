@@ -19,11 +19,11 @@ void show_alloc_mem(void)
     printf("START SHOW_ALLO_MEM()\n");
 
     head = g_zone[0];
-    printf("------------------------BLOCK HEAD {%p}--------------------------\n", head);
+   printf("------------------------BLOCK HEAD {%p}--------------------------\n", head);
     while (head != NULL)
     {
         chunk = (void *)head + sizeof(t_block);
-        printf("------------------------CHUNK {%p}--------------------------\n", chunk);
+       printf("------------------------CHUNK {%p}--------------------------\n", chunk);
         while (chunk != NULL)
         {
             printf("%zu \t%p\t %p\t %zu\t %d\t%zu\n", (size_t)chunk, chunk, chunk->next, chunk->size, chunk->free, head->blc_size);
