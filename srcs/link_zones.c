@@ -41,7 +41,7 @@ void	*link_zones(t_block *new_zone, size_t size, short index)
 	void		*addr;
 
  	new_zone->next = NULL;
-	new_zone->blc_size -= (size + sizeof(t_chunk));
+	// new_zone->blc_size -= (size + sizeof(t_chunk));
 	if (g_zone[index] == NULL)
 	{
 		g_zone[index] = new_zone;

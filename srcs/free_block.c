@@ -23,10 +23,11 @@ void show_alloc_mem(void)
     while (head != NULL)
     {
         chunk = (void *)head + sizeof(t_block);
+        int count = 0;
        printf("------------------------CHUNK {%p}--------------------------\n", chunk);
         while (chunk != NULL)
         {
-            printf("%zu \t%p\t %p\t %zu\t %d\t%zu\n", (size_t)chunk, chunk, chunk->next, chunk->size, chunk->free, head->blc_size);
+            printf("%zu \t%p\t %p\t %zu\t %d\t%zu\t %d\n", (size_t)chunk, chunk, chunk->next, chunk->size, chunk->free, head->blc_size, ++count);
             chunk = (t_chunk *)chunk->next;
         }
         head = head->next;

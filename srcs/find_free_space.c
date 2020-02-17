@@ -30,21 +30,37 @@ void		update_size_block_head(t_chunk *start)
 	head_block->blc_size += size + sizeof(t_chunk);
 }
 
-void	size_header_update(t_chunk *curr, t_chunk *next)
+void	size_header_update(t_chunk *curr, t_chunk *neighbor)
 {
 	t_block		*head;
 	t_chunk		*current;
+	t_chunk		*tmp;
 	size_t		size;
 
-	if (next == NULL)
-		;
+	if (neighbor == NULL)
+	{
+		printf("NULL NULL NULL NULL NULL\n");
+	}
+	else
+		printf("The size of next is %zu and is free? %d\n", neighbor->size, neighbor->free);
 //	size = curr->size + next->size + sizeof(t_chunk);
 	size = curr->size;
 	current = curr;
+	tmp = current; 
 	while(current->prev != NULL)
+	{
+		printf("curr = %p\n", curr);
 		current = current->prev;
+	}
+	while (tmp->prev != NULL)
+	{
+		printf("here you go again\n");
+		tmp = tmp->prev;
+	}
 	head = (t_block *)current - ONE;
-	head->blc_size += size;
+	printf("In size_header_update(%p)tmp(%p) before updating blc_size %zu\n", head, tmp, head->blc_size);
+	head->blc_size += size + neighbor->size + sizeof(t_chunk);
+	printf("In size_header_update(%p) after updating blc_size %zu\n", head, head->blc_size);
 }
 
 void	*init_chunk_header(t_chunk **chunk, size_t size)
@@ -81,29 +97,6 @@ static void	*find_chunk(t_chunk **chunk, size_t size, short index, t_block *star
 	curr = (*chunk);
 	while (curr != NULL)
 	{
-		// printf("hell\n");
-		// if (curr->free && (((base + size_pages) - (size_t)curr) >= (size + sizeof(t_chunk))))
-		// {
-		// 	tmp = (t_chunk *)curr->next;
-		// 	if (curr->size > (size + sizeof(t_chunk)) && tmp != NULL)
-		// 	{
-		// 		printf("BEFORE CALLING SPLIT WHAT IS THE SIZE OF CURR %zu\n", curr->size);
-		// 		addr = split_chunk(curr, size);
-		// 		printf("Address after calling split %p\n", addr);
-		// 	}
-		// 	else if (curr->size == size)
-		// 	{
-		// 		curr->free = 0;
-		// 		return (curr + ONE);
-		// 	}
-		// 	else
-		// 	{
-		// 		printf("foo curr->size %zu requested size = %zu\n", curr->size, size);
-		// 		addr = init_chunk_header(&curr, size);
-		// 	}
-		// 	start->blc_size -= (size + sizeof(t_chunk));
-		// 	return (addr);
-		// }
 		if (curr->free)
 		{
 		//	printf("addr((%p))__((%zu))size__((%p))curr->next\n", curr, curr->size, curr->next);

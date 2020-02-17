@@ -50,9 +50,11 @@ static void     coalesce(t_chunk *curr, t_chunk *neighbor)
 static void     free_ptr(t_chunk *ptr)
 {
     t_chunk     *curr;
+    t_chunk     *tmp;
     t_block     *head_block;
 
     curr = ptr;
+    tmp = curr;
     curr->free = 1;
     while (curr->prev != NULL)
         curr = curr->prev;
@@ -72,17 +74,17 @@ static int     neighbor_is_free(t_chunk *ptr)
     curr = ptr;
     next = (t_chunk *)ptr->next;
 
-    if (next != NULL && next->free)
+    if (next != NULL && next->free && next->next != NULL)
     {
         coalesce(curr, next);
         flag = 1;
-        size_header_update(curr, next);
+       // size_header_update(curr, next);
     }
     if (prev != NULL && prev->free)
     {
         coalesce(curr, prev);
         flag = 1;
-        size_header_update(curr, prev);
+//        size_header_update(curr, prev);
     }
     return (flag);
 }

@@ -50,7 +50,7 @@ void				*find_free_space(size_t size, short index);
 void				init_chunk(t_chunk **chunk, size_t size);
 void				*init_chunk_header(t_chunk **chunk, size_t size);
 void				update_size_block_head(t_chunk *start); // not in use
-void				size_header_update(t_chunk *curr, t_chunk *next);
+void				size_header_update(t_chunk *curr, t_chunk *neighbor);
 void				free_block(t_block *block_head, size_t size);
 void				*split_chunk(t_chunk *chunk, size_t size);
 void    			*split_to_midlle(t_chunk *curr, size_t size);
