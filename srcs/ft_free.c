@@ -24,7 +24,7 @@ static void     coalesce(t_chunk *curr, t_chunk *neighbor)
     t_chunk     *start;
     t_chunk     *tmp;
 
-    start = NULL;
+    // start = NULL;
     if (curr < neighbor) // next
     {
         start = curr;
@@ -82,9 +82,11 @@ static int     neighbor_is_free(t_chunk *ptr)
     }
     if (prev != NULL && prev->free)
     {
+    //    printf("neighbor_is_free(2)\n");
         coalesce(curr, prev);
         flag = 1;
-//        size_header_update(curr, prev);
+     //   size_header_update(curr, prev);
+     //   size_header_update(prev, curr);
     }
     return (flag);
 }
@@ -97,21 +99,21 @@ void            ft_free(void *ptr)
     t_block     *block_head;
     size_t      size_ptr_to_free;
     
-    if (ptr == NULL)
-        return ;
     curr = (t_chunk *)ptr - ONE;
-    next = curr;
-    if (curr->free != 0)
+    if (ptr == NULL || curr->free != 0)
         return ;
+    next = curr;
     size_ptr_to_free = curr->size;
     tmp = curr;
     while (tmp->prev != NULL)
         tmp = tmp->prev;
-    if (!neighbor_is_free(curr))
-        free_ptr(curr);
     while (next->next != NULL)
         next = (t_chunk *)next->next;
     block_head = (t_block *)tmp - ONE;
-    if (next->size < block_head->blc_size)
+    if (!neighbor_is_free(curr))
+        free_ptr(curr);
+    else
+        block_head->blc_size += size_ptr_to_free + sizeof(t_chunk);
+    if (next->size != block_head->blc_size)
         next->size = block_head->blc_size;
 }

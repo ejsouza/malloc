@@ -59,7 +59,8 @@ void	size_header_update(t_chunk *curr, t_chunk *neighbor)
 	}
 	head = (t_block *)current - ONE;
 	printf("In size_header_update(%p)tmp(%p) before updating blc_size %zu\n", head, tmp, head->blc_size);
-	head->blc_size += size + neighbor->size + sizeof(t_chunk);
+//	head->blc_size += size + neighbor->size + sizeof(t_chunk);
+	head->blc_size += curr->size;
 	printf("In size_header_update(%p) after updating blc_size %zu\n", head, head->blc_size);
 }
 
