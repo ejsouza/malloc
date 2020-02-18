@@ -18,7 +18,7 @@ void show_alloc_mem(void)
     t_chunk  *chunk;
     printf("START SHOW_ALLO_MEM()\n");
 
-    head = g_zone[0];
+    head = g_zone[1];
    printf("------------------------BLOCK HEAD {%p}--------------------------\n", head);
     while (head != NULL)
     {
@@ -33,6 +33,22 @@ void show_alloc_mem(void)
         head = head->next;
     }
     printf("END SHOW_ALLO_MEM()\n");
+}
+
+int         check_block_header(size_t size_head, size_t size_to_free)
+{
+    short   index;
+
+    index = size_to_free <= T_ZONE ? 0 : 1;
+    if (size_to_free > S_ZONE)
+        index = 2;
+    if (index == 2)
+        return (1);
+    else if (index == 1 && size_head == ((101 * getpagesize()) - sizeof(t_chunk) - sizeof(t_block)))
+        printf("FOUND in check_block_header() size_head %zu and size_to_free %zu index %d\n", size_head, size_to_free, index);
+    else if (index == 0 && size_head == ((26 * getpagesize()) - sizeof(t_chunk) - sizeof(t_block)))
+        printf("Found a block completely freee\n");
+    return (0);
 }
 
 void        free_block(t_block *block_head, size_t size)

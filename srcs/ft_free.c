@@ -116,4 +116,6 @@ void            ft_free(void *ptr)
         block_head->blc_size += size_ptr_to_free + sizeof(t_chunk);
     if (next->size != block_head->blc_size)
         next->size = block_head->blc_size;
+    if (check_block_header(block_head->blc_size, size_ptr_to_free))
+        free_block(block_head, size_ptr_to_free);
 }
