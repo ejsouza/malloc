@@ -23,7 +23,7 @@ int					main(int argc, char **argv)
 	
 	for (int i = 0; i < TIMES_TO_RUN; i++)
 	{
-		addr[i] = ft_malloc(4096);
+		addr[i] = ft_malloc(1024);
 		addr[i][0] = 42;
 	
 		if (i == 100)

@@ -18,7 +18,7 @@ void show_alloc_mem(void)
     t_chunk  *chunk;
     printf("START SHOW_ALLO_MEM()\n");
 
-    head = g_zone[1];
+    head = g_zone[0];
    printf("------------------------BLOCK HEAD {%p}--------------------------\n", head);
     while (head != NULL)
     {
@@ -35,6 +35,48 @@ void show_alloc_mem(void)
     printf("END SHOW_ALLO_MEM()\n");
 }
 
+static int  free_this_block(short index)
+{
+    t_block *head;
+    int     count_block;
+    int     count_free;
+    size_t  size_head;
+
+    count_block = 0;
+    count_free = 0;
+    head = g_zone[index];
+    if (index == 0)
+    {
+        size_head = (26 * getpagesize()) - sizeof(t_block) - sizeof(t_chunk);
+        while (head != NULL)
+        {
+            if (head->blc_size >= T_ZONE && head->blc_size < size_head)
+            {
+                printf("FOUND A BLOCK WITH SPACE %p\n", head);
+                count_free++;
+            }
+            count_block++;
+            head = head->next;
+        }
+    }
+    else if (index == 1)
+    {
+        size_head = (101 * getpagesize()) - sizeof(t_block) - sizeof(t_chunk);
+        while (head != NULL)
+        {
+            if (head->blc_size >= S_ZONE && head->blc_size < size_head)
+            {
+                printf("FOUND A BLOCK WITH SPACE %p\n", head);
+                count_free++;
+            }
+            count_block++;
+            head = head->next;
+        }
+    }
+    printf("free_this_block? count_free %d count_block %d\n", count_free, count_block);
+    return (count_block > 1 && count_free);
+}
+
 int         check_block_header(size_t size_head, size_t size_to_free)
 {
     short   index;
@@ -45,9 +87,15 @@ int         check_block_header(size_t size_head, size_t size_to_free)
     if (index == 2)
         return (1);
     else if (index == 1 && size_head == ((101 * getpagesize()) - sizeof(t_chunk) - sizeof(t_block)))
+    {
         printf("FOUND in check_block_header() size_head %zu and size_to_free %zu index %d\n", size_head, size_to_free, index);
+        return (free_this_block(index));
+    }
     else if (index == 0 && size_head == ((26 * getpagesize()) - sizeof(t_chunk) - sizeof(t_block)))
+    {
         printf("Found a block completely freee\n");
+        return (free_this_block(index));
+    }
     return (0);
 }
 
@@ -55,18 +103,27 @@ void        free_block(t_block *block_head, size_t size)
 {
     int error;
     int size_block;
+    int index;
 
     size_block = round_block(size);
     size_block++;
-    if (size - sizeof(t_chunk) > S_ZONE)
+    index = size <= T_ZONE ? 0 : 1;
+    if (size > S_ZONE)
+        index = 2;
+    if (index == 2)
+        error = munmap(block_head,  size_block);
+    else if (index == 1)
     {
-        error = munmap(block_head, size_block * getpagesize());
+        unlink_zone(block_head, index);
+        error = munmap(block_head, 26 * getpagesize());
+        printf("THIS IS WHAT munmap() return %d\n", error);
     }
-    else if (size - sizeof(t_chunk) > T_ZONE && (block_head->blc_size + sizeof(t_block))
-    == (size_t)PAGES_S)
+    else if (index == 0)
     {
-        printf("CALL FUNCTION TO CHECK IF THERE ONE MORE BLOCK BEFORE FREE BLOKC\n"); // handlle the SMALL (4096) blocks
+        unlink_zone(block_head, index);
+        error = munmap(block_head, 26 * getpagesize());
+        printf("THIS IS WHAT munmap() return %d\n", error);
     }
    // printf("---------------- in free block --------------- %zu\n", block_head->blc_size);
-   printf("%p \t %zu \t %zu\n", block_head, size - sizeof(t_chunk), block_head->blc_size);
+   //printf("%p \t %zu \t %zu\n", block_head, size - sizeof(t_chunk), block_head->blc_size);
 }

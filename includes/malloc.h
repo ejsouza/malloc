@@ -46,6 +46,7 @@ void				show_alloc_mem(void);
 void				*alloc_handler(size_t size, short inde);
 void				*link_zones(t_block *new_zone, size_t size
 		, short index);
+void				unlink_zone(t_block *zone, int index);
 void				*find_free_space(size_t size, short index);
 void				init_chunk(t_chunk **chunk, size_t size);
 void				*init_chunk_header(t_chunk **chunk, size_t size);
