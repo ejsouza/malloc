@@ -83,9 +83,14 @@ static int  free_this_block(short index)
     }
     else
     {
-        size_head = head->blc_size;
         tmp = (void *)head + sizeof(t_block);
-        printf("I'm here!!!!!!!!!!!!!!!!{%zu} addr head %p and addr tmp %p chunk->size %zu\n", size_head, head, tmp, tmp->size);
+        size_head = head->blc_size + tmp->size;
+        while (head != NULL)
+        {
+            count_block++;
+            head = head->next;
+        }
+        printf("I'm here!!!!!!!!!!!!!!!!{%zu} addr head %p and addr tmp %p chunk->size %zu total blocks %d\n", size_head, head, tmp, tmp->size, count_block);
     }
     
     printf("free_this_block? count_free %d count_block %d the return is %d\n", count_free, count_block, (count_block > 1 && count_free));
