@@ -91,6 +91,38 @@ static int     neighbor_is_free(t_chunk *ptr)
     return (flag);
 }
 
+static int      loop_through_block(void *ptr, int index)
+{
+    void        *tmp;
+    t_block     *block;
+    t_chunk     *curr;
+
+    block = g_zone[index];
+    while (block != NULL)
+    {
+        tmp = block + ONE;
+        curr = (t_chunk *)tmp;
+        while (curr != NULL)
+        {
+            printf("foo curr->free %d\n", curr->free);
+            if ((void *)curr + sizeof(t_chunk) == ptr && !curr->free)
+                return (1);
+            curr = (t_chunk *)curr->next;
+        }
+        block = block->next;
+    }
+    return (0);
+}
+
+static int      is_pointer_valid(void *ptr)
+{
+    if (loop_through_block(ptr, 0))
+        return (1);
+    if (loop_through_block(ptr, 1))
+        return (1);
+    return (0);
+}
+
 void            ft_free(void *ptr)
 {
     t_chunk     *curr;
@@ -99,9 +131,11 @@ void            ft_free(void *ptr)
     t_block     *block_head;
     size_t      size_ptr_to_free;
     
-    curr = (t_chunk *)ptr - ONE;
-    if (ptr == NULL || curr->free != 0)
+    if (ptr == 0 || !is_pointer_valid(ptr))
         return ;
+    printf("in ft_free(%p)\n", ptr);
+    curr = (t_chunk *)ptr - ONE;
+    printf("ft_free() curr = %p is free %d\n", curr, curr->next != NULL);
     next = curr;
     size_ptr_to_free = curr->size;
     tmp = curr;

@@ -73,7 +73,7 @@ static int  free_this_block(short index)
             head = head->next;
         }
     }
-    printf("free_this_block? count_free %d count_block %d\n", count_free, count_block);
+    printf("free_this_block? count_free %d count_block %d the return is %d\n", count_free, count_block, (count_block > 1 && count_free));
     return (count_block > 1 && count_free);
 }
 

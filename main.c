@@ -64,13 +64,20 @@ int					main(int argc, char **argv)
 	// //printf("After show_alloc_mem(2)\n");
 	//addr[0] = ft_malloc(24);
 	//printf("After calling malloc() again\n");
-	memcpy(addr[0], "Hello World!", 12);
+	//memcpy(addr[0], "Hello World!", 12);
+	printf("In main before calling the last free(%p)\n", addr[1]);
 	ft_free(addr[1]);
-	ft_free(addr[0]);
-	show_alloc_mem();
+	//ft_free(addr[0]);
+	//show_alloc_mem();
 	printf("\n---------------------------------------------------------------------\n");
 	// ft_free(addr[150]);
+	printf("In main before calling free() with NULL\n");
 	ft_free(NULL);
+
+	addr[150] = ft_malloc(5000);
+	show_alloc_mem();
+	printf("\n---------------------------------------------------------------------\n");
+	ft_free(addr[150]);
 	// //printf(">>>{%s}[%p]<<<\n", addr[0], addr[0]);
 	
 	// addr[1] = ft_malloc(16);
