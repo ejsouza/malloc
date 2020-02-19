@@ -33,13 +33,24 @@ static void unlink_this(t_block *zone, size_t count, size_t to_free, int index)
 void        unlink_zone(t_block *zone, int index)
 {
     t_block *head;
+    t_block *tmp;
     size_t  count_blocks;
     size_t  the_one_to_free;
+    size_t  block_len;
 
     count_blocks = 0;
     the_one_to_free = 0;
     printf("Enter unlink_zone(%p)\n", zone);
     head = zone;
+    tmp = zone;
+    block_len = 0;
+    printf("unlink_zone() zone %p, head %p, tmp %p THE NEXT %p\n", zone, head, tmp, tmp->next);
+    while (tmp != NULL)
+    {
+        block_len++;
+        tmp = tmp->next;
+    }
+    printf("in unlink_zone() the number of blocks are %zu\n", block_len);
     while (head != NULL)
     {
         if (head == zone)
@@ -54,6 +65,7 @@ void        unlink_zone(t_block *zone, int index)
         head = head->next;
         count_blocks++;
     }
+    printf("the count_blocks should be the number of blocks %zu \t the_one_to_free %zu\n", count_blocks, the_one_to_free);
     unlink_this(zone, count_blocks, the_one_to_free, index);
     printf("There are %zu total blocks and the block position to free %zu\n", count_blocks, the_one_to_free);
 }

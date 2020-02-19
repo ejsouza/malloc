@@ -77,18 +77,20 @@ void	*alloc_handler(size_t size, short index)
 	void	*addr;
 	t_block	*new_zone;
 
-	if (g_zone[index] == NULL || index == TWO)
+	addr = NULL;
+//	if (g_zone[index] == NULL || index == TWO) old version before adding the g_zone[2]
+	if (g_zone[index] == NULL)
 		addr = NULL;
-	else
+	else if (index != TWO)
 		addr = find_free_space(size, index);
 	new_zone = NULL;
 	if (addr == NULL)
 	{
 		if (((new_zone = allocator(size, index)) == NULL))
 			return (NULL);
-		if (index == TWO)
-			addr = new_zone + ONE;
-		else
+		//if (index == TWO)
+		//	addr = new_zone + ONE;
+		//else
 			addr = link_zones(new_zone, size, index);
 	}
 	return (addr);

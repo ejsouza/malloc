@@ -116,10 +116,19 @@ static int      loop_through_block(void *ptr, int index)
 
 static int      is_pointer_valid(void *ptr)
 {
+    //void        *tmp;
+    //t_block     *block;
+
     if (loop_through_block(ptr, 0))
         return (1);
     if (loop_through_block(ptr, 1))
         return (1);
+    if (loop_through_block(ptr, 2))
+    {
+        //tmp = (t_block *)ptr - ONE;
+        printf("(%p)***************************************************************************************\n", ptr);
+        return (1);
+    }
     return (0);
 }
 
