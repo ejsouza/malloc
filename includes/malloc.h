@@ -59,7 +59,8 @@ void    			*split_to_middle(t_chunk *curr, size_t size);
 size_t				round_block(size_t size);
 
 
-size_t				ft_strlen_malloc(const char *s);
-void				ft_putstr_malloc(char *str);
+size_t				ft_strlen_m(const char *s);
+void				ft_putstr(char *str);
+void        		number_to_hex(uint64_t numb, int base);
 
 #endif
