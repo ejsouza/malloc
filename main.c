@@ -26,17 +26,18 @@ int					main(int argc, char **argv)
 		addr[i] = ft_malloc(1024);
 		addr[i][0] = 42;
 	
-		if (i == 300)
+		if (i == 200)
 		{
 	// 		printf("AFTER CALLING A LOOP TO FREE 100 CHUNKS\n");
-	// 		show_alloc_mem();
-	// 		printf("\n---------------------------------------------------------------------\n");
+			show_alloc_mem();
+			printf("\n---------------------------------------------------------------------\n");
 	// 	// 	show_alloc_mem();
 	// 	// 	printf("\n---------------------------------------------------------------------\n");
-			for (int j = 100; j < 201; j++)
+			for (int j = 100; j < 150; j++)
 			{
 	// 	// 	// 	printf("%s %d\n", addr[j], j);
-				ft_free(addr[j]);
+				if (j % 2)
+					ft_free(addr[j]);
 			}
 	// 	// 	ft_free(addr[i - 1]);
 	// 	// 	ft_free(addr[i]);
@@ -94,6 +95,11 @@ int					main(int argc, char **argv)
 	show_alloc_mem();
 	printf("\n---------------------------------------------------------------------\n");
 	ft_free(addr[151]);
+	show_alloc_mem();
+	printf("\n---------------------------------------------------------------------\n");
+
+	addr[151] = ft_malloc(1024);
+	memcpy(addr[151], "Hello World!", 12);
 	show_alloc_mem();
 	printf("\n---------------------------------------------------------------------\n");
 	

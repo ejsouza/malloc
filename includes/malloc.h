@@ -49,13 +49,13 @@ void				*link_zones(t_block *new_zone, size_t size
 int					unlink_zone(t_block *zone, int index);
 void				*find_free_space(size_t size, short index);
 void				init_chunk(t_chunk **chunk, size_t size);
-void				*init_chunk_header(t_chunk **chunk, size_t size);
+// void				*init_chunk_header(t_chunk **chunk, size_t size);
 void				update_size_block_head(t_chunk *start); // not in use
-void				size_header_update(t_chunk *curr);
+// void				size_header_update(t_chunk *curr);
 void				free_block(t_block *block_head, size_t size);
 int         		check_block_header(size_t size_head, size_t size_to_free);
 void				*split_chunk(t_chunk *chunk, size_t size);
-void    			*split_to_midlle(t_chunk *curr, size_t size);
+void    			*split_to_middle(t_chunk *curr, size_t size);
 size_t				round_block(size_t size);
 
 #endif

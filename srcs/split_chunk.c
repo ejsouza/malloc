@@ -19,7 +19,7 @@ void        *split_chunk(t_chunk *chunk, size_t size)
     return (curr + ONE);
 }
 
-void    *split_to_midlle(t_chunk *curr, size_t size)
+void    *split_to_middle(t_chunk *curr, size_t size)
 {
     t_chunk     *new_chunk;
     void        *tmp;
