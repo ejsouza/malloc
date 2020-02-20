@@ -30,38 +30,26 @@ void		update_size_block_head(t_chunk *start)
 	head_block->blc_size += size + sizeof(t_chunk);
 }
 
-void	size_header_update(t_chunk *curr, t_chunk *neighbor)
+void	size_header_update(t_chunk *curr)
 {
 	t_block		*head;
 	t_chunk		*current;
-	t_chunk		*tmp;
+//	t_chunk		*tmp;
 	size_t		size;
 
-	if (neighbor == NULL)
-	{
-		printf("NULL NULL NULL NULL NULL\n");
-	}
-	else
-		printf("The size of next is %zu and is free? %d\n", neighbor->size, neighbor->free);
-//	size = curr->size + next->size + sizeof(t_chunk);
 	size = curr->size;
 	current = curr;
-	tmp = current; 
+//	tmp = current; 
 	while(current->prev != NULL)
 	{
-		printf("curr = %p\n", curr);
 		current = current->prev;
 	}
-	while (tmp->prev != NULL)
-	{
-		printf("here you go again\n");
-		tmp = tmp->prev;
-	}
+//	while (tmp->prev != NULL)
+//	{
+//		tmp = tmp->prev;
+//	}
 	head = (t_block *)current - ONE;
-	printf("In size_header_update(%p)tmp(%p) before updating blc_size %zu\n", head, tmp, head->blc_size);
-//	head->blc_size += size + neighbor->size + sizeof(t_chunk);
 	head->blc_size += curr->size;
-	printf("In size_header_update(%p) after updating blc_size %zu\n", head, head->blc_size);
 }
 
 void	*init_chunk_header(t_chunk **chunk, size_t size)
@@ -89,40 +77,27 @@ static void	*find_chunk(t_chunk **chunk, size_t size, short index, t_block *star
 	size_t	base;
 	int	size_pages;
 	t_chunk	*curr;
-	// t_chunk	*tmp;
 
 	size_pages = (index == TINY) ? PAGES_T : PAGES_S;
 	addr = NULL;
-	// base = ((size_t)(*chunk)) - 16; // check after changing the struct t_block should be more than 8
 	base = (size_t)start;
 	curr = (*chunk);
 	while (curr != NULL)
 	{
 		if (curr->free)
 		{
-		//	printf("addr((%p))__((%zu))size__((%p))curr->next\n", curr, curr->size, curr->next);
 			if (curr->size == size)
 			{
 				curr->free = 0;
 				addr = curr + ONE;
 			}
 			else if (curr->size > (size + sizeof(t_chunk)) && curr->next == NULL)
-			{
-		//		printf("ENTER HERE?\n");
 				// Pay attention to the end of the block
 				addr = split_chunk(curr, size);
-			}
 			else if (curr->size > (size + sizeof(t_chunk)) && curr->next != NULL)
-			{
-		//		printf("calling split_to_midlle(curr %p, size %zu)\n", curr, size);
 				addr = split_to_midlle(curr, size);
-			}
 			else
-			{
-		//		printf("NONE OF THE CONDITIONS ABOVE WORKS :(\n");
-		//		printf("{ size(%zu) curr->size(%zu) }\n", size, curr->size);
 				curr = (t_chunk *)curr->next;
-			}
 		}
 		else
 			curr = (t_chunk *)curr->next;
@@ -147,7 +122,6 @@ void	*find_free_space(size_t size, short index)
 	{
 		if (current->blc_size < (size + sizeof(t_chunk)))
 		{
-			printf("%p - %zu\n", current, current->blc_size);
 			current = current->next;
 			continue;
 		}	

@@ -1,12 +1,12 @@
 #include "includes/malloc.h"
 #include <stdlib.h>
 #include <string.h>
-#define TIMES_TO_RUN 110
+#define TIMES_TO_RUN 301
 
 
 int					main(int argc, char **argv)
 {
-	char		*addr[200];
+	char		*addr[400];
 	char		*addr1;
 	char		*addr2;
 	char		*addr3;
@@ -21,34 +21,34 @@ int					main(int argc, char **argv)
 		return (1);
 	}
 	
-	// for (int i = 0; i < TIMES_TO_RUN; i++)
-	// {
-	// 	addr[i] = ft_malloc(1024);
-	// 	addr[i][0] = 42;
+	for (int i = 0; i < TIMES_TO_RUN; i++)
+	{
+		addr[i] = ft_malloc(1024);
+		addr[i][0] = 42;
 	
-	// 	if (i == 100)
-	// 	{
+		if (i == 300)
+		{
 	// 		printf("AFTER CALLING A LOOP TO FREE 100 CHUNKS\n");
 	// 		show_alloc_mem();
 	// 		printf("\n---------------------------------------------------------------------\n");
 	// 	// 	show_alloc_mem();
 	// 	// 	printf("\n---------------------------------------------------------------------\n");
-	// 		for (int j = 0; j < i; j++)
-	// 		{
+			for (int j = 100; j < 201; j++)
+			{
 	// 	// 	// 	printf("%s %d\n", addr[j], j);
-	// 			ft_free(addr[j]);
-	// 		}
+				ft_free(addr[j]);
+			}
 	// 	// 	ft_free(addr[i - 1]);
 	// 	// 	ft_free(addr[i]);
-	// 	// 	printf("show_alloc_mem() after calling first free()\n");
-	// 		show_alloc_mem();
-	// 		printf("\n---------------------------------------------------------------------\n");
+		 	printf("show_alloc_mem() after calling first free()\n");
+			show_alloc_mem();
+			printf("\n---------------------------------------------------------------------\n");
 	// 	// 	//ft_free(addr[1]);
 
-	// 	}
-	// }
-	// show_alloc_mem();
-	// printf("\n---------------------------------------------------------------------\n");
+		}
+	}
+	show_alloc_mem();
+	printf("\n---------------------------------------------------------------------\n");
 	// ft_free(addr[3]);
 	// ft_free(addr[2]);
 	// show_alloc_mem();
@@ -89,7 +89,7 @@ int					main(int argc, char **argv)
 	printf("\n---------------------------------------------------------------------\n");
 	// //printf(">>>{%s}[%p]<<<\n", addr[0], addr[0]);
 
-	addr[151] = ft_malloc(5000);
+	addr[151] = ft_malloc(9000);
 	memcpy(addr[151], "Hello World!", 12);
 	show_alloc_mem();
 	printf("\n---------------------------------------------------------------------\n");

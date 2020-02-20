@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-#include <stdlib.h> // todelete
 
 static void create_first_chunk(t_chunk *chunk, size_t size, t_block *head)
 {
@@ -41,7 +40,6 @@ void	*link_zones(t_block *new_zone, size_t size, short index)
 	void		*addr;
 
  	new_zone->next = NULL;
-	// new_zone->blc_size -= (size + sizeof(t_chunk));
 	if (g_zone[index] == NULL)
 	{
 		g_zone[index] = new_zone;
@@ -64,7 +62,6 @@ void	*link_zones(t_block *new_zone, size_t size, short index)
 	addr = new_zone + ONE;
 	chunk = addr;
 	create_first_chunk(chunk, size, new_zone);
-	//init_chunk_header(&chunk, size);
 	addr = chunk + ONE;
 	return (addr);
 }

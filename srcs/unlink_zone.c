@@ -12,60 +12,82 @@
 
 #include "../includes/malloc.h"
 
-static void unlink_this(t_block *zone, size_t count, size_t to_free, int index)
+static size_t block_len(int index)
 {
-    t_block *curr;
-    t_block *tmp;
+    t_block    *curr;
+    size_t     len;
 
-    curr = zone;
-    printf("In unlink_this() g_zone[index] %p\n", g_zone[index]);
-    if (to_free == 0)
+    curr = g_zone[index];
+    len = 0;
+    while (curr != NULL)
     {
-        tmp = curr->next;
-        g_zone[index] = tmp;
-        printf("In unlink_this() after change g_zone[index] %p\n", g_zone[index]);
+        curr = curr->next;
+        len++;
     }
-    else if (count == 0 && to_free == 0)
-        ;
-
+    return (len);
 }
 
-void        unlink_zone(t_block *zone, int index)
+static int  space_in_block(t_block *block, int index)
 {
-    t_block *head;
-    t_block *tmp;
-    size_t  count_blocks;
-    size_t  the_one_to_free;
-    size_t  block_len;
+    size_t     min_left;
 
-    count_blocks = 0;
-    the_one_to_free = 0;
-    printf("Enter unlink_zone(%p)\n", zone);
-    head = zone;
-    tmp = zone;
-    block_len = 0;
-    printf("unlink_zone() zone %p, head %p, tmp %p THE NEXT %p\n", zone, head, tmp, tmp->next);
-    while (tmp != NULL)
+    min_left = index == 0 ? T_ZONE : S_ZONE;
+    min_left += sizeof(t_chunk) * 2;
+    if (block->blc_size > min_left)
+        return (1);
+    return (0);
+}
+
+//static void unlink_this(t_block *zone, size_t count, size_t to_free, int index) for the code bellow the comment "========"
+static int unlink_this(t_block *target, t_block *prev, int index, size_t count)
+{
+    t_block *tmp;
+
+    if (count == 0 && target == prev && index == TWO)
     {
-        block_len++;
-        tmp = tmp->next;
+        // The index here should be TWO cuz the others indexes always keeps at least one block
+        if (target->next == NULL)
+            g_zone[index] = NULL;
+        else
+            g_zone[index] = target->next;
     }
-    printf("in unlink_zone() the number of blocks are %zu\n", block_len);
+    else if (count == 0 && target == prev && block_len(index) > 1 && target->next != NULL)
+    {
+        if (!space_in_block(target->next, index))
+            return (0);
+        g_zone[index] = target->next;
+        target = NULL;
+    }
+    else if (count == (block_len(index) - ONE)) // Shall be the last on the list
+        prev->next = NULL;
+    else
+    {
+        tmp = target->next;
+        prev->next = tmp;
+        target = NULL;
+    }
+    return (1);
+}
+
+int        unlink_zone(t_block *zone, int index)
+{
+    t_block *target;
+    t_block *head;
+    t_block *prev;
+    int     count;
+
+    target = zone;
+    head = g_zone[index];
+    prev = head;
+    count = 0;
     while (head != NULL)
     {
-        if (head == zone)
-        {
-            the_one_to_free = count_blocks;
-            printf("head(%p) and zone(%p) points to the same address\n", head, zone);
-            printf("head->next ? %p\n", head->next);
-        }
-        else
-            printf("head(%p) and zone(%p) doesn't points to the same address\n", head, zone);
-        printf("This is the address of zone %p and have size of %zu\n", head, head->blc_size);
+        if (head != target)
+            prev = head;
+        else if (head == target)
+            break ;
+        count++;
         head = head->next;
-        count_blocks++;
     }
-    printf("the count_blocks should be the number of blocks %zu \t the_one_to_free %zu\n", count_blocks, the_one_to_free);
-    unlink_this(zone, count_blocks, the_one_to_free, index);
-    printf("There are %zu total blocks and the block position to free %zu\n", count_blocks, the_one_to_free);
+    return (unlink_this(zone, prev, index, count));
 }

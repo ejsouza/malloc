@@ -15,16 +15,11 @@
 size_t	round_block(size_t size)
 {
 	size_t	number_pages;
-	//size_t reminder;
 	size_t	page_size;
 	size_t	number_block;
 
 	page_size = getpagesize();
 	number_block = getpagesize();
-//	number_pages = size / page_size;
-	// reminder = size % page_size;
-	// if (reminder)
-	// 	number_pages++;
 	number_pages = 1;
 	while ((size + sizeof(t_block)) > number_block)
 	{
@@ -52,7 +47,6 @@ static void	*allocator(size_t size, short index)
 		number_page = MIN_ALLOC / number_page;
 	}
 	number_page++;
-	printf("NUMBER PAGE %zu\n", number_page);
 	zone = mmap(NULL, number_page * page_size, PROT_READ
 				| PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (zone == NULL || zone == MAP_FAILED)
@@ -88,9 +82,6 @@ void	*alloc_handler(size_t size, short index)
 	{
 		if (((new_zone = allocator(size, index)) == NULL))
 			return (NULL);
-		//if (index == TWO)
-		//	addr = new_zone + ONE;
-		//else
 			addr = link_zones(new_zone, size, index);
 	}
 	return (addr);

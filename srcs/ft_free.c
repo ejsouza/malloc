@@ -24,7 +24,7 @@ static void     coalesce(t_chunk *curr, t_chunk *neighbor)
     t_chunk     *start;
     t_chunk     *tmp;
 
-    // start = NULL;
+    start = NULL;
     if (curr < neighbor) // next
     {
         start = curr;
@@ -78,15 +78,11 @@ static int     neighbor_is_free(t_chunk *ptr)
     {
         coalesce(curr, next);
         flag = 1;
-       // size_header_update(curr, next);
     }
     if (prev != NULL && prev->free)
     {
-    //    printf("neighbor_is_free(2)\n");
         coalesce(curr, prev);
         flag = 1;
-     //   size_header_update(curr, prev);
-     //   size_header_update(prev, curr);
     }
     return (flag);
 }
@@ -104,7 +100,6 @@ static int      loop_through_block(void *ptr, int index)
         curr = (t_chunk *)tmp;
         while (curr != NULL)
         {
-            printf("foo curr->free %d\n", curr->free);
             if ((void *)curr + sizeof(t_chunk) == ptr && !curr->free)
                 return (1);
             curr = (t_chunk *)curr->next;
@@ -116,19 +111,12 @@ static int      loop_through_block(void *ptr, int index)
 
 static int      is_pointer_valid(void *ptr)
 {
-    //void        *tmp;
-    //t_block     *block;
-
     if (loop_through_block(ptr, 0))
         return (1);
     if (loop_through_block(ptr, 1))
         return (1);
     if (loop_through_block(ptr, 2))
-    {
-        //tmp = (t_block *)ptr - ONE;
-        printf("(%p)***************************************************************************************\n", ptr);
         return (1);
-    }
     return (0);
 }
 
@@ -142,9 +130,7 @@ void            ft_free(void *ptr)
     
     if (ptr == 0 || !is_pointer_valid(ptr))
         return ;
-    printf("in ft_free(%p)\n", ptr);
     curr = (t_chunk *)ptr - ONE;
-    printf("ft_free() curr = %p is free %d\n", curr, curr->next != NULL);
     next = curr;
     size_ptr_to_free = curr->size;
     tmp = curr;

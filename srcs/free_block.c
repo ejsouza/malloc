@@ -28,10 +28,11 @@ void show_alloc_mem(void)
         while (head != NULL)
         {
             chunk = (void *)head + sizeof(t_block);
-            int count = 0;
+           int count = 0;
             printf("------------------------CHUNK {%p}-------------------------- index {%d}\n", chunk, index);
             while (chunk != NULL)
             {
+               // printf("while(chunk != NULL) %p\n)", chunk);
                 printf("%zu \t%p\t %p\t %zu\t %d\t%zu\t %d\n", (size_t)chunk, chunk, chunk->next, chunk->size, chunk->free, head->blc_size, ++count);
                 chunk = (t_chunk *)chunk->next;
             }
@@ -60,7 +61,7 @@ static int  free_this_block(short index)
         {
             if (head->blc_size >= T_ZONE && head->blc_size < size_head)
             {
-                printf("FOUND A BLOCK WITH SPACE %p\n", head);
+           //     printf("FOUND A BLOCK WITH SPACE %p\n", head);
                 count_free++;
             }
             count_block++;
@@ -74,26 +75,29 @@ static int  free_this_block(short index)
         {
             if (head->blc_size >= S_ZONE && head->blc_size < size_head)
             {
-                printf("FOUND A BLOCK WITH SPACE %p\n", head);
+         //       printf("FOUND A BLOCK WITH SPACE %p\n", head);
                 count_free++;
             }
             count_block++;
             head = head->next;
         }
     }
-    else
+    else // For the index == 2
     {
         tmp = (void *)head + sizeof(t_block);
         size_head = head->blc_size + tmp->size;
+       // printf("size_head = %zu\n", size_head);
         while (head != NULL)
         {
             count_block++;
             head = head->next;
         }
-        printf("I'm here!!!!!!!!!!!!!!!!{%zu} addr head %p and addr tmp %p chunk->size %zu total blocks %d\n", size_head, head, tmp, tmp->size, count_block);
+        count_block = count_block < TWO ? TWO : count_block;
+     //   printf("I'm here!!!!!!!!!!!!!!!!{%zu} addr head %p and addr tmp %p chunk->size %zu total blocks %d\n", size_head, head, tmp, tmp->size, count_block);
+        return (1);
     }
     
-    printf("free_this_block? count_free %d count_block %d the return is %d\n", count_free, count_block, (count_block > 1 && count_free));
+   // printf("free_this_block? count_free %d count_block %d the return is %d\n", count_free, count_block, (count_block > 1 && count_free));
     return (count_block > 1 && count_free);
 }
 
@@ -107,12 +111,12 @@ int         check_block_header(size_t size_head, size_t size_to_free)
         //return (1);
     else if (index == 1 && size_head == ((101 * getpagesize()) - sizeof(t_chunk) - sizeof(t_block)))
     {
-        printf("FOUND in check_block_header() size_head %zu and size_to_free %zu index %d\n", size_head, size_to_free, index);
+       // printf("FOUND in check_block_header() size_head %zu and size_to_free %zu index %d\n", size_head, size_to_free, index);
         return (free_this_block(index));
     }
     else if (index == 0 && size_head == ((26 * getpagesize()) - sizeof(t_chunk) - sizeof(t_block)))
     {
-        printf("Found a block completely freee\n");
+      // printf("Found a block completely freee\n");
         return (free_this_block(index));
     }
     return (0);
@@ -127,6 +131,7 @@ void        free_block(t_block *block_head, size_t size)
     size_block = round_block(size);
     size_block++;
     index = size <= T_ZONE ? 0 : 1;
+    error = 1;
     if (size > S_ZONE)
         index = 2;
     if (index == 2)
@@ -137,14 +142,14 @@ void        free_block(t_block *block_head, size_t size)
     }
     else if (index == 1)
     {
-        unlink_zone(block_head, index);
-        error = munmap(block_head, 26 * getpagesize());
+        if (unlink_zone(block_head, index))
+            error = munmap(block_head, 26 * getpagesize());
         printf("THIS IS WHAT munmap() return %d\n", error);
     }
     else if (index == 0)
     {
-        unlink_zone(block_head, index);
-        error = munmap(block_head, 26 * getpagesize());
+        if (unlink_zone(block_head, index))
+            error = munmap(block_head, 26 * getpagesize());
         printf("THIS IS WHAT munmap() return %d\n", error);
     }
    // printf("---------------- in free block --------------- %zu\n", block_head->blc_size);
