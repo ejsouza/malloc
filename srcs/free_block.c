@@ -12,37 +12,6 @@
 
 #include "../includes/malloc.h"
 
-void show_alloc_mem(void)
-{
-    t_block *head;
-    t_chunk  *chunk;
-    int     index;
-    printf("START SHOW_ALLO_MEM()\n");
-
-    head = NULL;
-    index = 0;
-    while (index < NB_ZONE)
-    {
-        head = g_zone[index];
-        printf("------------------------BLOCK HEAD {%p}-------------------------- index {%d}\n", head, index);
-        while (head != NULL)
-        {
-            chunk = (void *)head + sizeof(t_block);
-           int count = 0;
-            printf("------------------------CHUNK {%p}-------------------------- index {%d}\n", chunk, index);
-            while (chunk != NULL)
-            {
-               // printf("while(chunk != NULL) %p\n)", chunk);
-                printf("%zu \t%p\t %p\t %zu\t %d\t%zu\t %d\n", (size_t)chunk, chunk, chunk->next, chunk->size, chunk->free, head->blc_size, ++count);
-                chunk = (t_chunk *)chunk->next;
-            }
-            head = head->next;
-        }
-        index++;
-    }
-    printf("END SHOW_ALLO_MEM()\n");
-}
-
 static int  free_this_block(short index)
 {
     t_block *head;
