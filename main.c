@@ -20,8 +20,7 @@ int					main(int argc, char **argv)
 		printf("usage %s <size>\n", argv[0]);
 		return (1);
 	}
-	
-	for (int i = 0; i < TIMES_TO_RUN; i++)
+	for (i = 0; i < TIMES_TO_RUN; i++)
 	{
 		addr[i] = ft_malloc(1024);
 		addr[i][0] = 42;
@@ -47,6 +46,21 @@ int					main(int argc, char **argv)
 */	// 	// 	//ft_free(addr[1]);
 
 		}
+	}
+	show_alloc_mem();
+	int y = 0;
+	for (; y < TIMES_TO_RUN; y++)
+	{
+		addr[i] = ft_malloc(4096);
+		addr[i][0] = 42;
+		i++;
+	}
+	show_alloc_mem();
+	for (int x = 0; x < TIMES_TO_RUN; x++)
+	{
+		addr[i] = ft_malloc(5000);
+		addr[i][0] = 42;
+		i++;
 	}
 	show_alloc_mem();
 //	printf("\n---------------------------------------------------------------------\n");

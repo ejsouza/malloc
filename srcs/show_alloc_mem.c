@@ -25,7 +25,6 @@ static void print_block_name(int index, t_block *head)
         size_head = (uint64_t)head; 
         ft_putstr(message[index]);
         number_to_hex(size_head, 16);
-        //put_number(head->blc_size);
         ft_putstr("\n");
     }
 }
@@ -38,7 +37,7 @@ static void print_chunk_info(t_chunk *chunk)
 
     if (chunk == 0)
         return ;
-    addr = (uint64_t)chunk;
+    addr = (uint64_t)chunk + sizeof(t_chunk);
     next = (uint64_t)chunk->next;
     size = chunk->size;
     number_to_hex(addr, 16);

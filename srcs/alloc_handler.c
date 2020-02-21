@@ -53,7 +53,6 @@ static void	*allocator(size_t size, short index)
 		return (NULL);
 	tmp = zone;
 	tmp->blc_size = (number_page * page_size) - sizeof(t_block);
-	printf("allocator(%p) \t block_size %zu\n", zone, tmp->blc_size);
 	return (zone);
 }
 
@@ -72,7 +71,6 @@ void	*alloc_handler(size_t size, short index)
 	t_block	*new_zone;
 
 	addr = NULL;
-//	if (g_zone[index] == NULL || index == TWO) old version before adding the g_zone[2]
 	if (g_zone[index] == NULL)
 		addr = NULL;
 	else if (index != TWO)

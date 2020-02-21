@@ -30,7 +30,6 @@ static void create_first_chunk(t_chunk *chunk, size_t size, t_block *head)
 	new_chunk->free = 1;
 	new_chunk->next = NULL;
 	new_chunk->prev = chunk;
-	printf("chunk %p new_chunk %p tmp %p\n", chunk, new_chunk, tmp_void);
 }
 
 void	*link_zones(t_block *new_zone, size_t size, short index)
