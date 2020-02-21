@@ -1,7 +1,7 @@
 #include "includes/malloc.h"
 #include <stdlib.h>
 #include <string.h>
-#define TIMES_TO_RUN 301
+#define TIMES_TO_RUN 5
 
 
 int					main(int argc, char **argv)
@@ -41,15 +41,15 @@ int					main(int argc, char **argv)
 			}
 	// 	// 	ft_free(addr[i - 1]);
 	// 	// 	ft_free(addr[i]);
-		 	printf("show_alloc_mem() after calling first free()\n");
+/*		 	printf("show_alloc_mem() after calling first free()\n");
 			show_alloc_mem();
 			printf("\n---------------------------------------------------------------------\n");
-	// 	// 	//ft_free(addr[1]);
+*/	// 	// 	//ft_free(addr[1]);
 
 		}
 	}
 	show_alloc_mem();
-	printf("\n---------------------------------------------------------------------\n");
+//	printf("\n---------------------------------------------------------------------\n");
 	// ft_free(addr[3]);
 	// ft_free(addr[2]);
 	// show_alloc_mem();
@@ -75,7 +75,7 @@ int					main(int argc, char **argv)
 	//printf("In main before calling free() with NULL\n");
 	//ft_free(NULL);
 
-
+/*
 	addr[149] = ft_malloc(5000);
 	memcpy(addr[149], "Hello World!", 12);
 	show_alloc_mem();
@@ -102,7 +102,7 @@ int					main(int argc, char **argv)
 	memcpy(addr[151], "Hello World!", 12);
 	show_alloc_mem();
 	printf("\n---------------------------------------------------------------------\n");
-	
+*/	
 	
 	// addr[152] = ft_malloc(4096);
 	// memcpy(addr[152], "Hello World!", 12);

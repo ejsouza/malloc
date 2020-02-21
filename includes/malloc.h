@@ -59,8 +59,10 @@ void    			*split_to_middle(t_chunk *curr, size_t size);
 size_t				round_block(size_t size);
 
 
-size_t				ft_strlen_m(const char *s);
+size_t				ft_strlen(const char *s);
 void				ft_putstr(char *str);
+void        		put_number(uint64_t number);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
 void        		number_to_hex(uint64_t numb, int base);
 
 #endif

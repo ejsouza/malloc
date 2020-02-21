@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-size_t			ft_strlen_m(const char *s)
+size_t			ft_strlen(const char *s)
 {
 	size_t		len;
 
@@ -27,5 +27,24 @@ size_t			ft_strlen_m(const char *s)
 
 void		ft_putstr(char *str)
 {
-	write(1, str, ft_strlen_m(str));
+	write(1, str, ft_strlen(str));
+}
+
+void				*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	int				i;
+	unsigned char	*dst_cpy;
+	unsigned char	*src_cpy;
+
+	i = 0;
+	dst_cpy = (unsigned char *)dst;
+	src_cpy = (unsigned char *)src;
+	while (n)
+	{
+		dst_cpy[i] = src_cpy[i];
+		i++;
+		n--;
+	}
+	dst = dst_cpy;
+	return ((unsigned char *)dst);
 }
