@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esouza <esouza@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 15:19:08 by esouza            #+#    #+#             */
+/*   Updated: 2020/02/21 15:19:11 by esouza           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
 static void print_block_name(int index, t_block *head)
@@ -37,18 +49,19 @@ static void print_chunk_info(t_chunk *chunk)
     ft_putstr(" octets\n");
 }
 
-static void add_size(size_t **size, t_chunk *chunk)
+static void add_size(size_t *size, t_chunk *chunk)
 {
-    *size += chunk->size;
-    size_t tmp = (size_t)*size; // todelte
-    printf("size %zu \tchunk->size %zu\n", tmp, chunk->size);
+    size_t      nb;
+
+    nb = chunk->size;
+    *size +=  chunk->size;
     print_chunk_info(chunk);
 }
 
 static void print_details(size_t *total_size)
 {
     ft_putstr("Total : ");
-    put_number((uint64_t)total_size);
+    put_number((*total_size));
     ft_putstr(" octets\n");
 }
 
@@ -57,7 +70,7 @@ void show_alloc_mem(void)
     t_block *head;
     t_chunk  *chunk;
     int     index;
-    size_t  *total_size;
+    size_t  total_size;
 
     head = NULL;
     index = -1;
@@ -72,13 +85,10 @@ void show_alloc_mem(void)
             while (chunk != NULL)
             {
                 if (chunk->next != NULL)
-                {
-             //       printf(" total_size [%zu]", (size_t)total_size);
                     add_size(&total_size, chunk);
-                }
                 chunk = (t_chunk *)chunk->next;
             }
-            print_details(total_size);
+            print_details(&total_size);
             head = head->next;
         }
     }
