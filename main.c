@@ -47,6 +47,7 @@ int					main(int argc, char **argv)
 
 		}
 	}
+	addr[i++] = ft_malloc(64);
 	show_alloc_mem();
 	int y = 0;
 	for (; y < TIMES_TO_RUN; y++)
