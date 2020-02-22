@@ -45,7 +45,6 @@ void	*link_zones(t_block *new_zone, size_t size, short index)
 		g_zone[index]->next = NULL;
 		current = g_zone[index];
 	}
-//	else if (index != TWO) Pay very attention on this change!
 	else
 	{
 		current = g_zone[index];
