@@ -1,12 +1,12 @@
 #include "includes/malloc.h"
 #include <stdlib.h>
 #include <string.h>
-#define TIMES_TO_RUN 5
+#define TIMES_TO_RUN 300
 
 
 int					main(int argc, char **argv)
 {
-	char		*addr[400];
+	char		*addr[301];
 	char		*addr1;
 	char		*addr2;
 	char		*addr3;
@@ -22,7 +22,7 @@ int					main(int argc, char **argv)
 	}
 	for (i = 0; i < TIMES_TO_RUN; i++)
 	{
-		addr[i] = ft_malloc(1024);
+		addr[i] = ft_malloc(4096);
 		addr[i][0] = 42;
 	
 		if (i == 200)
@@ -32,12 +32,15 @@ int					main(int argc, char **argv)
 			printf("\n---------------------------------------------------------------------\n");
 	// 	// 	show_alloc_mem();
 	// 	// 	printf("\n---------------------------------------------------------------------\n");
-			for (int j = 100; j < 150; j++)
+			for (int j = 100; j < i ; j++)
 			{
 	// 	// 	// 	printf("%s %d\n", addr[j], j);
-				if (j % 2)
-					ft_free(addr[j]);
+				//if (j % 2)
+				ft_free(addr[j]);
 			}
+			show_alloc_mem();
+			printf("\n---------------------------------------------------------------------\n");
+
 	// 	// 	ft_free(addr[i - 1]);
 	// 	// 	ft_free(addr[i]);
 /*		 	printf("show_alloc_mem() after calling first free()\n");
@@ -47,23 +50,23 @@ int					main(int argc, char **argv)
 
 		}
 	}
-	addr[i++] = ft_malloc(64);
+	//addr[100] = ft_malloc(64);
 	show_alloc_mem();
-	int y = 0;
-	for (; y < TIMES_TO_RUN; y++)
-	{
-		addr[i] = ft_malloc(4096);
-		addr[i][0] = 42;
-		i++;
-	}
-	show_alloc_mem();
-	for (int x = 0; x < TIMES_TO_RUN; x++)
-	{
-		addr[i] = ft_malloc(5000);
-		addr[i][0] = 42;
-		i++;
-	}
-	show_alloc_mem();
+	// int y = 100;
+	// for (; y < 150; y++)
+	// {
+	// 	addr[y] = ft_malloc(4096);
+	// 	addr[y][0] = 42;
+	// }
+	// printf("titi 2\n");
+	// show_alloc_mem();
+	// for (int x = y; x < TIMES_TO_RUN; x++)
+	// {
+	// 	addr[x] = ft_malloc(5000);
+	// 	addr[x][0] = 42;
+	// }
+	// printf("titi 3\n");
+	// show_alloc_mem();
 //	printf("\n---------------------------------------------------------------------\n");
 	// ft_free(addr[3]);
 	// ft_free(addr[2]);

@@ -99,7 +99,7 @@ void        free_block(t_block *block_head, size_t size)
     else if (index == 1)
     {
         if (unlink_zone(block_head, index))
-            error = munmap(block_head, 26 * getpagesize());
+            error = munmap(block_head, 101 * getpagesize());
     }
     else if (index == 0)
     {

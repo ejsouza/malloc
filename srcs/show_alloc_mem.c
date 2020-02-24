@@ -72,6 +72,7 @@ void show_alloc_mem(void)
     size_t  total_size;
 
     head = NULL;
+    total_size = 0;
     index = -1;
     while (++index < NB_ZONE)
     {
@@ -79,16 +80,15 @@ void show_alloc_mem(void)
         print_block_name(index, head);
         while (head != NULL)
         {
-            total_size = 0;
             chunk = (void *)head + sizeof(t_block);
             while (chunk != NULL)
             {
-                if (chunk->next != NULL)
+                if (chunk->next != NULL && !chunk->free)
                     add_size(&total_size, chunk);
                 chunk = (t_chunk *)chunk->next;
             }
-            print_details(&total_size);
             head = head->next;
         }
     }
+    print_details(&total_size);
 }
