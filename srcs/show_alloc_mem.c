@@ -83,7 +83,7 @@ void show_alloc_mem(void)
             chunk = (void *)head + sizeof(t_block);
             while (chunk != NULL)
             {
-                if (chunk->next != NULL)
+                if (chunk->next != NULL && !chunk->free)
                     add_size(&total_size, chunk);
                 chunk = (t_chunk *)chunk->next;
             }

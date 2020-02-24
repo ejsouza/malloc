@@ -20,50 +20,67 @@ int					main(int argc, char **argv)
 		printf("usage %s <size>\n", argv[0]);
 		return (1);
 	}
-	for (i = 0; i < TIMES_TO_RUN; i++)
-	{
-		addr[i] = ft_malloc(1024);
-		addr[i][0] = 42;
+// 	for (i = 0; i < TIMES_TO_RUN; i++)
+// 	{
+// 		addr[i] = ft_malloc(1024);
+// 		addr[i][0] = 42;
 	
-		if (i == 200)
-		{
-	// 		printf("AFTER CALLING A LOOP TO FREE 100 CHUNKS\n");
-			show_alloc_mem();
-			printf("\n---------------------------------------------------------------------\n");
-	// 	// 	show_alloc_mem();
-	// 	// 	printf("\n---------------------------------------------------------------------\n");
-			for (int j = 100; j < 150; j++)
-			{
-	// 	// 	// 	printf("%s %d\n", addr[j], j);
-				if (j % 2)
-					ft_free(addr[j]);
-			}
-	// 	// 	ft_free(addr[i - 1]);
-	// 	// 	ft_free(addr[i]);
-/*		 	printf("show_alloc_mem() after calling first free()\n");
-			show_alloc_mem();
-			printf("\n---------------------------------------------------------------------\n");
-*/	// 	// 	//ft_free(addr[1]);
+// 		if (i == 200)
+// 		{
+// 	// 		printf("AFTER CALLING A LOOP TO FREE 100 CHUNKS\n");
+// 			show_alloc_mem();
+// 			printf("\n---------------------------------------------------------------------\n");
+// 	// 	// 	show_alloc_mem();
+// 	// 	// 	printf("\n---------------------------------------------------------------------\n");
+// 			for (int j = 100; j < 150; j++)
+// 			{
+// 	// 	// 	// 	printf("%s %d\n", addr[j], j);
+// 				if (j % 2)
+// 					ft_free(addr[j]);
+// 			}
+// 	// 	// 	ft_free(addr[i - 1]);
+// 	// 	// 	ft_free(addr[i]);
+// /*		 	printf("show_alloc_mem() after calling first free()\n");
+// 			show_alloc_mem();
+// 			printf("\n---------------------------------------------------------------------\n");
+// */	// 	// 	//ft_free(addr[1]);
 
-		}
-	}
-	addr[i++] = ft_malloc(64);
+// 		}
+// 	}
+// 	addr[i++] = ft_malloc(64);
+// 	show_alloc_mem();
+// 	int y = 0;
+// 	for (; y < TIMES_TO_RUN; y++)
+// 	{
+// 		addr[i] = ft_malloc(4096);
+// 		addr[i][0] = 42;
+// 		i++;
+// 	}
+// 	show_alloc_mem();
+// 	for (int x = 0; x < TIMES_TO_RUN; x++)
+// 	{
+// 		addr[i] = ft_malloc(5000);
+// 		addr[i][0] = 42;
+// 		i++;
+// 	}
+// 	show_alloc_mem();
+
+
+	i = 0;
+	addr[i] = ft_malloc(42);
+	ft_memcpy(addr[i], "Hello world\n", ft_strlen("Hello world\n"));
+	printf("%s\n", addr[i]);
 	show_alloc_mem();
-	int y = 0;
-	for (; y < TIMES_TO_RUN; y++)
-	{
-		addr[i] = ft_malloc(4096);
-		addr[i][0] = 42;
-		i++;
-	}
+	addr[1] = ft_realloc(addr[i], 5);
+	printf("=========================\n");
 	show_alloc_mem();
-	for (int x = 0; x < TIMES_TO_RUN; x++)
-	{
-		addr[i] = ft_malloc(5000);
-		addr[i][0] = 42;
-		i++;
-	}
+	printf("=========================\n");
+	printf("%s\n", addr[1]);
+	ft_realloc(addr[1], 21);
+	printf("%s\n", addr[1]);
 	show_alloc_mem();
+
+
 //	printf("\n---------------------------------------------------------------------\n");
 	// ft_free(addr[3]);
 	// ft_free(addr[2]);

@@ -109,7 +109,7 @@ static int      loop_through_block(void *ptr, int index)
     return (0);
 }
 
-static int      is_pointer_valid(void *ptr)
+int      is_pointer_valid(void *ptr)
 {
     if (loop_through_block(ptr, 0))
         return (1);

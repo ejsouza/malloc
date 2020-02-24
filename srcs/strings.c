@@ -48,3 +48,18 @@ void				*ft_memcpy(void *dst, const void *src, size_t n)
 	dst = dst_cpy;
 	return ((unsigned char *)dst);
 }
+
+void				*ft_memmove(void *dst, const void *src, size_t len)
+{
+	unsigned char			*dst_cpy;
+	unsigned char			*src_cpy;
+
+	src_cpy = (unsigned char *)src;
+	dst_cpy = (unsigned char *)dst;
+	if (src_cpy < dst_cpy)
+		while (len--)
+			dst_cpy[len] = src_cpy[len];
+	else
+		ft_memcpy(dst_cpy, src_cpy, len);
+	return (dst_cpy);
+}
