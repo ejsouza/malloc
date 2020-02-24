@@ -1,5 +1,34 @@
 #include "../includes/malloc.h"
 
+static void     *merge_end(t_chunk *chunk, t_chunk *last, size_t size, size_t size_head)
+{
+    t_chunk     *set_to_null;
+    t_chunk     *curr;
+    t_chunk     *new_chunk;
+    t_block     *head;
+   // void        *tmp;
+
+    if (size)
+        ;
+    set_to_null = (t_chunk *)chunk->next;
+    curr = chunk;
+    new_chunk = (void *)chunk + sizeof(t_chunk) + size_head;
+    new_chunk->free = 1;
+    new_chunk->size = last->size - sizeof(t_chunk) - size_head;
+    new_chunk->next = NULL;
+    new_chunk->prev = chunk; 
+    chunk->size = size_head;
+    chunk->next = (void *)new_chunk;
+    while (curr != NULL)
+        curr = curr->prev;
+    head = (void *)curr - sizeof(t_block);
+    printf("head %p and head->size %zu\n", head, head->blc_size);
+    if (chunk == NULL)
+        return (NULL);
+    return (chunk + ONE);
+
+}
+
 static void    *merge_chunk(t_chunk *chunk, t_chunk *next, size_t size)
 {
     t_chunk     *curr;
@@ -30,6 +59,7 @@ static void    *merge_chunk(t_chunk *chunk, t_chunk *next, size_t size)
         else if (size_found >= size && tmp->next == NULL)
         {
             printf("handlle here \n");
+            merge_end(chunk, tmp, size, size_found);
         }
     }
     printf("merge_chunk(3) count %zu\n", count);
