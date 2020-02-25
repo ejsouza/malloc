@@ -12,6 +12,20 @@
 
 #include "../includes/malloc.h"
 
+size_t	malloc_base_16(size_t size)
+{
+	size_t		remainder;
+
+	if (size < MIN_SIZE_ALLOC)
+		return (MIN_SIZE_ALLOC);
+	remainder = size % MIN_SIZE_ALLOC;
+	if (remainder)
+	{
+		size += MIN_SIZE_ALLOC - remainder;
+	}
+	return (size);
+}
+
 size_t	round_block(size_t size)
 {
 	size_t	number_pages;
@@ -71,6 +85,8 @@ void	*alloc_handler(size_t size, short index)
 	t_block	*new_zone;
 
 	addr = NULL;
+	size = malloc_base_16(size);
+	printf("size %zu\n", size);
 	if (g_zone[index] == NULL)
 		addr = NULL;
 	else if (index != TWO)

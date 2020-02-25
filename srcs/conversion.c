@@ -38,6 +38,11 @@ void        put_number(uint64_t number)
     uint64_t remainder;
     size_t      len;
 
+    if (!number)
+    {
+        ft_putstr("0");
+        return ;
+    }
     i = 0;
     remainder = 0;
     max_val = (uint64_t)1844674407370955161;
