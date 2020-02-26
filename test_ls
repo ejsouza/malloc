@@ -1,0 +1,2 @@
+sh run.sh ls > output
+gcc test.c ./Libft/libft.a -o toto

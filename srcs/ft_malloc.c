@@ -27,7 +27,7 @@ void		*malloc(size_t size)
 	void	*addr;
 	short	index;
 
-	ft_putstr("Enter malloc\n");
+	ft_putstr("\nEnter malloc\n");
 	if (size < 0)
 		return (NULL);
 	if (size % TWO)
@@ -37,5 +37,11 @@ void		*malloc(size_t size)
 	//printf("%p\n", addr);
 	ft_putstr("Exit malloc\n");
 	//show_alloc_mem();
+
+	/* delete bellow */
+	uint64_t toto = (uint64_t)addr;
+	ft_putstr("The pointer returned by malloc()\n");
+	number_to_hex(toto, 16);
+	printf("\n");
 	return (addr);
 }
