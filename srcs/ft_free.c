@@ -120,8 +120,9 @@ int      is_pointer_valid(void *ptr)
     return (0);
 }
 
-void            ft_free(void *ptr)
+void            free(void *ptr)
 {
+    ft_putstr("Enter free()\n");
     t_chunk     *curr;
     t_chunk     *next;
     t_chunk     *tmp;
@@ -129,7 +130,11 @@ void            ft_free(void *ptr)
     size_t      size_ptr_to_free;
     
     if (ptr == 0 || !is_pointer_valid(ptr))
+    {
+        ft_putstr("End free(pointer not valid)\n");
+        //show_alloc_mem();
         return ;
+    }
     curr = (t_chunk *)ptr - ONE;
     next = curr;
     size_ptr_to_free = curr->size;
@@ -147,4 +152,6 @@ void            ft_free(void *ptr)
         next->size = block_head->blc_size;
     if (check_block_header(block_head->blc_size, size_ptr_to_free))
         free_block(block_head, size_ptr_to_free);
+    ft_putstr("Leaves free()\n"); 
+    //show_alloc_mem();   
 }

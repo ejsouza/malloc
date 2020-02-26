@@ -86,7 +86,7 @@ void	*alloc_handler(size_t size, short index)
 
 	addr = NULL;
 	size = malloc_base_16(size);
-	printf("size %zu\n", size);
+	//printf("size %zu\n", size);
 	if (g_zone[index] == NULL)
 		addr = NULL;
 	else if (index != TWO)

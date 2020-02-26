@@ -17,10 +17,10 @@ t_block						*zone[NB_ZONE];
 void						*malloc(size_t size)
 {
 	void			*addr;
-	printf("t_block = %lu\n", sizeof(t_block));
+	//printf("t_block = %lu\n", sizeof(t_block));
 	if ((addr = handler_request(size, &zone[NB_ZONE])) == MAP_FAILED)
 		return (NULL);
-	printf("********* %d\n", zone_size(size));
+//	printf("********* %d\n", zone_size(size));
 	return (addr);
 }
 

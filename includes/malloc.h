@@ -39,8 +39,8 @@ typedef struct				s_block
 
 t_block						*g_zone[NB_ZONE];
 
-void						*ft_malloc(size_t size); // clean the ft_ from the function name
-void						ft_free(void *ptr);		// Dito
+void						*malloc(size_t size); // clean the ft_ from the function name
+void						free(void *ptr);		// Dito
 void						*ft_realloc(void *ptr, size_t size);
 void						show_alloc_mem(void);
 

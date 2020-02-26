@@ -67,7 +67,7 @@ int					main(int argc, char **argv)
 
 
 	i = 0;
-	addr[i] = ft_malloc(42);
+	addr[i] = malloc(42);
 	ft_memcpy(addr[i], "Hello world\n", ft_strlen("Hello world\n"));
 	printf("%s\n", addr[i]);
 	show_alloc_mem();

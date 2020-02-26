@@ -1,0 +1,33 @@
+Enter malloc
+Exit malloc
+Enter malloc
+Exit malloc
+Enter free()
+End free(pointer not valid)
+Enter free()
+End free(pointer not valid)
+Enter free()
+End free(pointer not valid)
+Enter malloc
+Exit malloc
+Enter malloc
+Exit malloc
+Enter free()
+End free(pointer not valid)
+Enter free()
+End free(pointer not valid)
+Enter malloc
+Exit malloc
+Enter free()
+End free(pointer not valid)
+Enter free()
+End free(pointer not valid)
+Enter free()
+End free(pointer not valid)
+pointer is NULL
+0Enter realloc(0)
+End realloc(2)
+
+ptr1 = 
+
+ptr1[0] = 'i'

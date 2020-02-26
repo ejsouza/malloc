@@ -30,12 +30,12 @@ OBJS = $(SRCS:.c=.o)
 CFLAGS = -Wall -Werror -Wextra -Iincludes
 
 $(NAME): $(OBJS:%.o=$(OBJ_DIR)/%.o) $(HEADER) Makefile
-	@$(AR) $@ $(OBJS:%.o=$(OBJ_DIR)/%.o)
+	@$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJS:%.o=$(OBJ_DIR)/%.o)
 	@ln -sf $(NAME) $(LINK)
 	@echo "\033[0;36m            ==== Creating Library ===="
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(srcs) $(CFLAGS) -c $< -o $@
+	@$(CC) $(srcs) $(CFLAGS) -fPIC -c $< -o $@
 	@echo "\033[32m         ==== Creating Objcts Files ===="
 
 all: $(NAME)

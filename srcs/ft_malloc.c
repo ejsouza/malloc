@@ -22,11 +22,12 @@ static short	zone_size(size_t size)
 }
 
 
-void		*ft_malloc(size_t size)
+void		*malloc(size_t size)
 {
 	void	*addr;
 	short	index;
 
+	ft_putstr("Enter malloc\n");
 	if (size < 0)
 		return (NULL);
 	if (size % TWO)
@@ -34,5 +35,7 @@ void		*ft_malloc(size_t size)
 	index = zone_size(size);
 	addr = alloc_handler(size, index);
 	//printf("%p\n", addr);
+	ft_putstr("Exit malloc\n");
+	//show_alloc_mem();
 	return (addr);
 }

@@ -35,12 +35,12 @@ static void		link_block(t_block *addr, t_block *zone[NB_ZONE], short index)
 	}
 	zone[index]->next = addr;
 	zone[index] = tmp;
-	printf("i = %d\tblock_size %zu\n", i, zone[index]->block_size);
-	printf("--------------ADDRESS---------------\n");
-	printf("zone[%p]\n", zone[index]);
-	printf("strt[%p]\n", zone[index]->start);
-	printf("size[%p]\n", &zone[index]->block_size);
-	printf("------------------------------------\n");
+	//printf("i = %d\tblock_size %zu\n", i, zone[index]->block_size);
+//	printf("--------------ADDRESS---------------\n");
+	// printf("zone[%p]\n", zone[index]);
+	// printf("strt[%p]\n", zone[index]->start);
+	// printf("size[%p]\n", &zone[index]->block_size);
+	// printf("------------------------------------\n");
 }
 
 void			*handler_request(size_t size, t_block *zone[NB_ZONE])
@@ -57,7 +57,7 @@ void			*handler_request(size_t size, t_block *zone[NB_ZONE])
 	}
 	else if (index == LARGE)
 	{
-		printf("Not handled the LARGE yet\n");
+		// printf("Not handled the LARGE yet\n");
 		return (NULL);
 	}
 	else

@@ -31,7 +31,7 @@ t_block			*malloc_zone(short index)
 	number_page = page_size / size_zone;
 	number_page = MIN_ALLOC / number_page;
 	number_page++;
-	printf(">>>>>>>>>>>>>> %zu\t>>> %zu\n", number_page, number_page * page_size);
+	//printf(">>>>>>>>>>>>>> %zu\t>>> %zu\n", number_page, number_page * page_size);
 	zone = (t_block *)mmap(NULL, number_page * page_size, PROT_READ
 				| PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (zone != MAP_FAILED && zone != NULL)
