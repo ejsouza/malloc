@@ -180,6 +180,9 @@ static void     *extend_to_end(t_chunk *start, size_t size)
 
     if (count_chunks(start, size) == ONE)
     {
+        ft_putstr("count_chunks(start, size) == ONE\n");
+        put_number(size);
+        ft_putstr("\n");
         // The next here should be the last chunk with next->next == NULL
         curr = start;
         next = (t_chunk *)curr->next;
@@ -265,11 +268,7 @@ static  int     fit_front(t_chunk *start, size_t size)
     ft_putstr("Enter realloc()\n");
     if (!is_pointer_valid(ptr))
     {
-        ft_putstr("End realloc(2)\n");
-        //show_alloc_mem();
         return (NULL);
-        ft_putstr("End realloc(2)\n");
-
     }
     tmp = ptr - (sizeof(t_chunk));
     chunk = tmp;

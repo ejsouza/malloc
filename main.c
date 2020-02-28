@@ -28,6 +28,11 @@ int					main(int argc, char **argv)
 	addr1 = malloc(736);
 	ft_memmove(addr1, "Hello World!", 13);
 	addr2 = realloc(addr1 + 5, 800);
+	addr[100] = malloc(128);
+	ft_memmove(addr[100], "Hello world!", 12);
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
 
 //	size_t number_malloc = 12178;
 	size_t number_malloc = 5000;
@@ -45,10 +50,36 @@ int					main(int argc, char **argv)
 	ft_putstr(addr1);
 	ft_putstr(")");
 	ft_putstr("\n");
+	ft_putstr("first show_alloc_mem() BEFORE FIRST valid realloc()\n");
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
+	ft_putstr("\n\n");
+	ft_putstr("first show_alloc_mem() AFTER FIRSR valid realloc()\n");
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
 	addr2 = realloc(addr1, 800);
+
+	ft_putstr("first show_alloc_mem() AFTER SECOND valid realloc()\n");
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
+
 	ft_putstr("-->\n");
 	ft_putstr(addr2);
 	ft_putstr("\n<--\n");
+
+	addr2 = realloc(addr1, 42);
+	ft_putstr("-->\n");
+	ft_putstr(addr2);
+	ft_putstr("\n<--\n");
+
+	ft_putstr("first show_alloc_mem() AFTER THIRD valid realloc()\n");
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
+
 	addr_ptr = (size_t)addr2;
 	number_to_hex(addr_ptr, 16);
 	ft_putstr("\n");
