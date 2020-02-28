@@ -1,5 +1,7 @@
 ft_printf
 Libft
+tests
+test_jray
 objs
 main
 *test[0-1]

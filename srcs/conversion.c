@@ -70,19 +70,19 @@ void        number_to_hex(uint64_t numb, int base)
     ft_memcpy(hex, "0123456789ABCDEF", 16);
     number[0] = '0';
     number[1] = 'x';
-   // i = 10;
-    i = 2;
+    i = 10;
+    //i = 2;
     while (numb != 0 && i < 42)
     {
         remainder = numb % base;
         if (remainder < 10)
-            number[i++] = 48 + remainder;
-//            number[i--] = 48 + remainder;
+            // number[i++] = 48 + remainder;
+           number[i--] = 48 + remainder;
         else
-            number[i++] = hex[remainder];
-//            number[i--] = hex[remainder];
+            // number[i++] = hex[remainder];
+           number[i--] = hex[remainder];
         numb /= base;
     }
-    number[i] = 0;
+    number[11] = 0;
     ft_putstr(number);
 }

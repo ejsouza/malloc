@@ -17,9 +17,46 @@ int					main(int argc, char **argv)
 	index = 26 * 4096; // 26 is the number of pages here
 	if (argc != 2)
 	{
-		printf("usage %s <size>\n", argv[0]);
+		ft_putstr("usage  <size>\n");
 		return (1);
 	}
+
+	// Try to reproduce segfault =======================================
+
+	//system("ls");
+
+	addr1 = malloc(736);
+	ft_memmove(addr1, "Hello World!", 13);
+	addr2 = realloc(addr1 + 5, 800);
+
+//	size_t number_malloc = 12178;
+	size_t number_malloc = 5000;
+	i = 0;
+	int y = 0;
+	for (; i < 4; i++)
+	{
+		addr[i] = malloc(4096);
+		ft_memmove(addr[i], "Helloc world", 12);
+	}
+	size_t addr_ptr = (size_t)addr1;
+	number_to_hex(addr_ptr, 16);
+	ft_putstr("\n");
+	ft_putstr("(");
+	ft_putstr(addr1);
+	ft_putstr(")");
+	ft_putstr("\n");
+	addr2 = realloc(addr1, 800);
+	ft_putstr("-->\n");
+	ft_putstr(addr2);
+	ft_putstr("\n<--\n");
+	addr_ptr = (size_t)addr2;
+	number_to_hex(addr_ptr, 16);
+	ft_putstr("\n");
+	show_alloc_mem();
+	ft_putstr("\n----------------------END MAIN()-------------------------------\n");
+
+
+
 // 	for (i = 0; i < TIMES_TO_RUN; i++)
 // 	{
 // 		addr[i] = ft_malloc(1024);
@@ -65,7 +102,7 @@ int					main(int argc, char **argv)
 // 	}
 // 	show_alloc_mem();
 
-
+/*
 	i = 0;
 	addr[i] = malloc(42);
 	ft_memcpy(addr[i], "Hello world\n", ft_strlen("Hello world\n"));
@@ -79,7 +116,7 @@ int					main(int argc, char **argv)
 	ft_realloc(addr[1], 21);
 	printf("%s\n", addr[1]);
 	show_alloc_mem();
-
+*/
 
 //	printf("\n---------------------------------------------------------------------\n");
 	// ft_free(addr[3]);

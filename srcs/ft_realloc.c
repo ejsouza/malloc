@@ -12,123 +12,123 @@
 
 #include "../includes/malloc.h"
 
-static void     *merge_end(t_chunk *chunk, t_chunk *last, size_t size, size_t size_found)
-{
-    // t_chunk     *set_to_null;
-    // t_chunk     *curr;
-    t_chunk     *new_chunk;
-    // t_block     *head;
-    void        *tmp;
+// static void     *merge_end(t_chunk *chunk, t_chunk *last, size_t size, size_t size_found)
+// {
+//     // t_chunk     *set_to_null;
+//     // t_chunk     *curr;
+//     t_chunk     *new_chunk;
+//     // t_block     *head;
+//     void        *tmp;
 
-    if (size == size_found)
-    {
-        /* Here I add the sizeof(t_chunk) to size because there's no more space left to create another chunk */
-        chunk->size = size + sizeof(t_chunk);
-        chunk->next = NULL;
-        last = NULL;
-        return (chunk + ONE); 
-    }
-    else if (size_found > size && (size_found - (size + sizeof(t_chunk))) > MIN_SIZE_ALLOC)
-    {
-       // printf("BEFORE ALL chunk->free %d chunk->size %zu\n", chunk->free, chunk->size);
-        tmp = (void *)chunk + size;
-       // printf("chunk %p tmp %p tmp + sizeof %p\n", chunk, tmp, tmp + sizeof(t_chunk));
-        new_chunk = (t_chunk *)tmp;
-        new_chunk->free = 1;
-        new_chunk->size = ((size_found - size) - sizeof(t_chunk));
-       // printf("size_found %zu size %zu sizeof(chunk) %zu\n", size_found, size, sizeof(t_chunk));
-       // printf("size_found %zu \t new_chunk->size %zu\n", size_found, new_chunk->size);
-        new_chunk->next = NULL;
-        new_chunk->prev = chunk;
-        chunk->next = (void *)new_chunk;
-        chunk->size = size;
-       // printf("leaves merge_end(%p) chunk + ONE %p\n", chunk, chunk + ONE);
-       // printf("chunk->free %d \t chunk->size %zu\n", chunk->free, chunk->size);
+//     if (size == size_found)
+//     {
+//         /* Here I add the sizeof(t_chunk) to size because there's no more space left to create another chunk */
+//         chunk->size = size + sizeof(t_chunk);
+//         chunk->next = NULL;
+//         last = NULL;
+//         return (chunk + ONE); 
+//     }
+//     else if (size_found > size && (size_found - (size + sizeof(t_chunk))) > MIN_SIZE_ALLOC)
+//     {
+//        // printf("BEFORE ALL chunk->free %d chunk->size %zu\n", chunk->free, chunk->size);
+//         tmp = (void *)chunk + size;
+//        // printf("chunk %p tmp %p tmp + sizeof %p\n", chunk, tmp, tmp + sizeof(t_chunk));
+//         new_chunk = (t_chunk *)tmp;
+//         new_chunk->free = 1;
+//         new_chunk->size = ((size_found - size) - sizeof(t_chunk));
+//        // printf("size_found %zu size %zu sizeof(chunk) %zu\n", size_found, size, sizeof(t_chunk));
+//        // printf("size_found %zu \t new_chunk->size %zu\n", size_found, new_chunk->size);
+//         new_chunk->next = NULL;
+//         new_chunk->prev = chunk;
+//         chunk->next = (void *)new_chunk;
+//         chunk->size = size;
+//        // printf("leaves merge_end(%p) chunk + ONE %p\n", chunk, chunk + ONE);
+//        // printf("chunk->free %d \t chunk->size %zu\n", chunk->free, chunk->size);
 
-        return (chunk + ONE);
-    }
-    // if (size)
-    //     ;
-    // set_to_null = (t_chunk *)chunk->next;
-    // curr = chunk;
-    // new_chunk = (void *)chunk + sizeof(t_chunk) + size_head;
-    // new_chunk->free = 1;
-    // new_chunk->size = last->size - sizeof(t_chunk) - size_head;
-    // new_chunk->next = NULL;
-    // new_chunk->prev = chunk; 
-    // chunk->size = size_head;
-    // chunk->next = (void *)new_chunk;
-    // while (curr != NULL)
-    //     curr = curr->prev;
-    // head = (void *)curr - sizeof(t_block);
-    // printf("head %p and head->size %zu\n", head, head->blc_size);
-    // if (chunk == NULL)
-    //     return (NULL);
-    // return (chunk + ONE);
-    return (NULL);
-}
+//         return (chunk + ONE);
+//     }
+//     // if (size)
+//     //     ;
+//     // set_to_null = (t_chunk *)chunk->next;
+//     // curr = chunk;
+//     // new_chunk = (void *)chunk + sizeof(t_chunk) + size_head;
+//     // new_chunk->free = 1;
+//     // new_chunk->size = last->size - sizeof(t_chunk) - size_head;
+//     // new_chunk->next = NULL;
+//     // new_chunk->prev = chunk; 
+//     // chunk->size = size_head;
+//     // chunk->next = (void *)new_chunk;
+//     // while (curr != NULL)
+//     //     curr = curr->prev;
+//     // head = (void *)curr - sizeof(t_block);
+//     // printf("head %p and head->size %zu\n", head, head->blc_size);
+//     // if (chunk == NULL)
+//     //     return (NULL);
+//     // return (chunk + ONE);
+//     return (NULL);
+// }
 
-static void    *merge_chunk(t_chunk *chunk, t_chunk *next, size_t size)
-{
-    t_chunk     *curr;
-    t_chunk     *tmp;
-    size_t      size_found;
+// static void    *merge_chunk(t_chunk *chunk, t_chunk *next, size_t size)
+// {
+//     t_chunk     *curr;
+//     t_chunk     *tmp;
+//     size_t      size_found;
 
-    curr = chunk;
-    tmp = next;
-    size_found = chunk->size;
-    while (curr->next != NULL && tmp->free && size_found < size)
-    {
-        tmp = (t_chunk *)curr->next;
-        size_found += tmp->size;
-        if (size_found >= size && tmp->next != NULL)
-        {
-            tmp = (t_chunk *)tmp->next;
-            chunk->next = (void *)tmp;
-            chunk->size = size_found;
-            tmp->prev = (t_chunk *)chunk;
-            return (chunk + ONE);
-        }
-        else if (size_found >= size && tmp->next == NULL)
-            return (merge_end(chunk, tmp, size, size_found));
-    }
-    return (NULL);
-}
+//     curr = chunk;
+//     tmp = next;
+//     size_found = chunk->size;
+//     while (curr->next != NULL && tmp->free && size_found < size)
+//     {
+//         tmp = (t_chunk *)curr->next;
+//         size_found += tmp->size;
+//         if (size_found >= size && tmp->next != NULL)
+//         {
+//             tmp = (t_chunk *)tmp->next;
+//             chunk->next = (void *)tmp;
+//             chunk->size = size_found;
+//             tmp->prev = (t_chunk *)chunk;
+//             return (chunk + ONE);
+//         }
+//         else if (size_found >= size && tmp->next == NULL)
+//             return (merge_end(chunk, tmp, size, size_found));
+//     }
+//     return (NULL);
+// }
 
-static void *extend_ptr(void *ptr, size_t size)
-{
-    void    *tmp;
-    t_chunk *chunk;
-    void    *new_chunk;
-    t_chunk *next;
+// static void *extend_ptr(void *ptr, size_t size)
+// {
+//     void    *tmp;
+//     t_chunk *chunk;
+//     void    *new_chunk;
+//     t_chunk *next;
 
-    new_chunk = NULL;
-    tmp = ptr - (sizeof(t_chunk));
-    chunk = tmp;
-    next = (t_chunk *)chunk->next;
-    if (next != NULL && next->free)
-        if ((new_chunk = merge_chunk(chunk, next, size)) == NULL)
-        {
-            //printf("merge_chunk(%p)\n", new_chunk);
-            new_chunk = malloc(size);
-        }
-    if (new_chunk == NULL)
-        return (ptr);
-    ft_memmove(new_chunk, ptr, size);
-    //printf("LEAVES extend_ptr(%s)\n", new_chunk);
-    return (new_chunk);
-}
+//     new_chunk = NULL;
+//     tmp = ptr - (sizeof(t_chunk));
+//     chunk = tmp;
+//     next = (t_chunk *)chunk->next;
+//     if (next != NULL && next->free)
+//         if ((new_chunk = merge_chunk(chunk, next, size)) == NULL)
+//         {
+//             //printf("merge_chunk(%p)\n", new_chunk);
+//             new_chunk = malloc(size);
+//         }
+//     if (new_chunk == NULL)
+//         return (ptr);
+//     ft_memmove(new_chunk, ptr, size);
+//     //printf("LEAVES extend_ptr(%s)\n", new_chunk);
+//     return (new_chunk);
+// }
 
-static void *malloc_new(void *ptr, size_t size)
-{
-    void        *new_chunk;
+// static void *malloc_new(void *ptr, size_t size)
+// {
+//     void        *new_chunk;
 
-    if ((new_chunk = malloc(size)) == NULL)
-        return (ptr);
-    ft_memmove(new_chunk, ptr, size);
-    free(ptr);
-    return (new_chunk);
-}
+//     if ((new_chunk = malloc(size)) == NULL)
+//         return (ptr);
+//     ft_memmove(new_chunk, ptr, size);
+//     free(ptr);
+//     return (new_chunk);
+// }
 
 /* =============================================================================================== */
 
@@ -192,9 +192,9 @@ static void     *extend_to_end(t_chunk *start, size_t size)
         new_chunk->size = size_next - size - sizeof(t_chunk);
         curr->next = (void *)new_chunk;
         curr->size = size;
-        tmp = (void *)curr - sizeof(t_chunk);
+        tmp = (void *)start;
         update_block_header(start, new_chunk->size);
-        return (tmp);
+        return (start + ONE);
     }
     else if (count_chunks(start, size) > ONE)
         ft_putstr("STILL NOT HANDLLING THIS ONE\n");
@@ -250,17 +250,19 @@ static  int     fit_front(t_chunk *start, size_t size)
      ** 
      */
 
+    int     nb_to_call;
     uint64_t fuck;
     fuck = (uint64_t)ptr;
     if (!ptr)
         ft_putstr("pointer is NULL\n");
     put_number(fuck);
+    ft_putstr("\n");
     //number_to_hex(fuck, 16);
     void    *tmp;
     t_chunk *chunk;
     void    *new_chunk;
 
-    ft_putstr("Enter realloc(0)\n");
+    ft_putstr("Enter realloc()\n");
     if (!is_pointer_valid(ptr))
     {
         ft_putstr("End realloc(2)\n");
@@ -272,16 +274,22 @@ static  int     fit_front(t_chunk *start, size_t size)
     tmp = ptr - (sizeof(t_chunk));
     chunk = tmp;
     new_chunk = NULL;
-    if (size % 2)
-        size = malloc_base_16(size);
-    if (fit_front(chunk, size) == TWO)
-        extend_to_end(chunk, size);
+    // if (size % 2)
+        // size = malloc_base_16(size);
+    if (size != 0)
+        size = (size + 15) & ~15;
+    nb_to_call = fit_front(chunk, size);
+    if (nb_to_call == TWO)
+       return (extend_to_end(chunk, size));
+    // if (fit_front(chunk, size) == TWO)
+        // extend_to_end(chunk, size);
     else
     {
-        ft_putstr("what to handlle here ?\n");
+        put_number(nb_to_call);
+        ft_putstr("\nwhat to handlle here ?\n");
     }
     
-    if (size == 0)
+   /* if (size == 0)
     {
         ft_putstr("End realloc(3)\n");
         return (malloc_new(ptr, MIN_SIZE_ALLOC));
@@ -315,5 +323,7 @@ static  int     fit_front(t_chunk *start, size_t size)
     }
     //printf("ptr %p chunk %p chunk->size %zu size %zu\n", ptr, chunk, chunk->size, size);
     ft_putstr("End realloc(7)\n");
+  */ 
+    ft_putstr("Before realloc() endes and return NULL\n");
     return (NULL);
  }
