@@ -85,12 +85,6 @@ void	*alloc_handler(size_t size, short index)
 	t_block	*new_zone;
 
 	addr = NULL;
-	//size = malloc_base_16(size);
-	if (size != 0)
-		size = (size + 15) & ~15;
-	put_number(size);
-	ft_putstr("\n");
-//	ft_putstr("\n-------------------------\n");
 	if (g_zone[index] == NULL)
 		addr = NULL;
 	else if (index != TWO)

@@ -56,6 +56,7 @@ int         				check_block_header(size_t size_head, size_t size_to_free);
 int      					is_pointer_valid(void *ptr);
 void						*split_chunk(t_chunk *chunk, size_t size);
 void    					*split_to_middle(t_chunk *curr, size_t size);
+void						*enlarge_mem(t_chunk *start, t_chunk *next, size_t size, int times);
 short						zone_size(size_t size);
 size_t						round_block(size_t size);
 size_t						malloc_base_16(size_t size);

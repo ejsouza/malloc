@@ -11,21 +11,6 @@ static void     *malloc_min_size(void *ptr)
     return (new_chunk);
 }
 
-// static void *merge_next_chunks(t_chunk *start, size_t size)
-// {
-//     /* Returns pointer to user and not a chunk head */
-//     t_chunk *curr;
-//     t_chunk *next;
-//     t_chunk *third_chunk;
-//     size_t  total_size;
-
-//     curr = start;
-//     next = start->next;
-//     third_chunk = next->next;
-//     total_size = next->size + sizeof(t_chunk);
-//     next->free = 0;
-// }
-
 static void *split_create_new(t_chunk *start, size_t size)
 {
     t_chunk *next;
@@ -76,7 +61,7 @@ static void *realloc_handler(void *ptr, size_t size, int index)
     }
     else
     {
-        printf("Not handled\n");
+        addr = enlarge_mem(curr, next, size, times);
     }
     
     return (addr);
@@ -87,6 +72,7 @@ void   *realloc(void *ptr, size_t size)
     void    *addr;
     int     index;
 
+    ft_putstr("realloc(mine)\n");
     addr = NULL;
     if (!is_pointer_valid(ptr))
         return (NULL);

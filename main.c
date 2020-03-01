@@ -43,6 +43,7 @@ int					main(int argc, char **argv)
 		addr[i] = malloc(4096);
 		ft_memmove(addr[i], "Helloc world", 12);
 	}
+	addr[102] = realloc(addr[1], 1000);
 	size_t addr_ptr = (size_t)addr1;
 	number_to_hex(addr_ptr, 16);
 	ft_putstr("\n");
@@ -66,12 +67,12 @@ int					main(int argc, char **argv)
 	show_alloc_mem();
 	ft_putstr("\n======================================================================\n");
 
-	ft_putstr("-->\n");
+	ft_putstr("\n-->\n");
 	ft_putstr(addr2);
 	ft_putstr("\n<--\n");
 
 	addr2 = realloc(addr1, 42);
-	ft_putstr("-->\n");
+	ft_putstr("\n-->\n");
 	ft_putstr(addr2);
 	ft_putstr("\n<--\n");
 

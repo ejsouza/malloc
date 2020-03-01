@@ -27,10 +27,12 @@ void		*malloc(size_t size)
 	void	*addr;
 	short	index;
 
+	ft_putstr("malloc(mine)\n");
 	if (size < 0)
 		return (NULL);
 	if (size == 0)
 		size = MIN_SIZE_ALLOC;
+	size = (size + 15) & ~15;
 	index = zone_size(size);
 	addr = alloc_handler(size, index);
 	return (addr);
