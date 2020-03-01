@@ -55,13 +55,13 @@ int					main(int argc, char **argv)
 	show_alloc_mem();
 	ft_putstr("\n======================================================================\n");
 	ft_putstr("\n\n");
-	ft_putstr("first show_alloc_mem() AFTER FIRSR valid realloc()\n");
+	ft_putstr("first show_alloc_mem() AFTER FIRST non valid realloc()\n");
 	ft_putstr("\n======================================================================\n");
 	show_alloc_mem();
 	ft_putstr("\n======================================================================\n");
 	addr2 = realloc(addr1, 800);
 
-	ft_putstr("first show_alloc_mem() AFTER SECOND valid realloc()\n");
+	ft_putstr("first show_alloc_mem() AFTER SECOND non valid realloc()\n");
 	ft_putstr("\n======================================================================\n");
 	show_alloc_mem();
 	ft_putstr("\n======================================================================\n");
@@ -75,7 +75,7 @@ int					main(int argc, char **argv)
 	ft_putstr(addr2);
 	ft_putstr("\n<--\n");
 
-	ft_putstr("first show_alloc_mem() AFTER THIRD valid realloc()\n");
+	ft_putstr("first show_alloc_mem() AFTER FIRST valid realloc()\n");
 	ft_putstr("\n======================================================================\n");
 	show_alloc_mem();
 	ft_putstr("\n======================================================================\n");
@@ -84,9 +84,23 @@ int					main(int argc, char **argv)
 	number_to_hex(addr_ptr, 16);
 	ft_putstr("\n");
 	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
+
+	addr[101] = malloc(64);
+	ft_memmove(addr[101], "Hello World! 101", 17);
+	ft_putstr(addr[101]);
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
+
+	addr[102] = realloc(addr[101], 256);
+	ft_putstr(addr[102]);
+	ft_putstr("\n======================================================================\n");
+	show_alloc_mem();
+	ft_putstr("\n======================================================================\n");
+
+
 	ft_putstr("\n----------------------END MAIN()-------------------------------\n");
-
-
 
 // 	for (i = 0; i < TIMES_TO_RUN; i++)
 // 	{

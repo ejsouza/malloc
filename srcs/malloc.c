@@ -12,8 +12,6 @@
 
 #include "../includes/malloc.h"
 
-t_block						*zone[NB_ZONE];
-
 void						*malloc(size_t size)
 {
 	void			*addr;
