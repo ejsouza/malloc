@@ -86,6 +86,7 @@ void show_alloc_mem(void)
     size_t  total_size;
 
     head = NULL;
+    total_size = 0;
     index = -1;
     while (++index < NB_ZONE)
     {
