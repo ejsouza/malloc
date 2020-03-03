@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #define TIMES_TO_RUN 5
+#define NINE	9
+#define HEX		16
 
 
 int					main(int argc, char **argv)
 {
-	char		*addr[400];
 	char		*addr1;
 	char		*addr2;
 	char		*addr3;
@@ -28,77 +29,98 @@ int					main(int argc, char **argv)
 	addr1 = malloc(736);
 	ft_memmove(addr1, "Hello World!", 13);
 	addr2 = realloc(addr1 + 5, 800);
-	addr[100] = malloc(128);
-	ft_memmove(addr[100], "Hello world!", 12);
+	addr3 = malloc(128);
+	ft_memmove(addr3, "Hello world!", 12);
 	ft_putstr("\n======================================================================\n");
 	show_alloc_mem();
 	ft_putstr("\n======================================================================\n");
 
 //	size_t number_malloc = 12178;
 	size_t number_malloc = 5000;
+	char		*addr[number_malloc];
 	i = 0;
 	int y = 0;
-	for (; i < 4; i++)
+	while (i < number_malloc)
 	{
-		addr[i] = malloc(4096);
-		ft_memmove(addr[i], "Helloc world", 12);
+		addr[i] = malloc(i);
+		if (addr[i] != NULL)
+			ft_memmove(addr[i], "Helloc world", 12);
+		i += HEX;
 	}
-	addr[102] = realloc(addr[1], 1000);
-	size_t addr_ptr = (size_t)addr1;
-	number_to_hex(addr_ptr, 16);
-	ft_putstr("\n");
-	ft_putstr("(");
-	ft_putstr(addr1);
-	ft_putstr(")");
-	ft_putstr("\n");
-	ft_putstr("first show_alloc_mem() BEFORE FIRST valid realloc()\n");
-	ft_putstr("\n======================================================================\n");
+	i = 0;
+	while (i < number_malloc)
+	{
+		int tmp = i % 2;
+		if (tmp)
+			tmp = HEX + NINE;
+		else
+			tmp = HEX;
+		if (i % 2)
+			addr4 = realloc(addr[i], i + tmp);
+		else if (!(i % 2) && ((i - tmp) > 0))
+			addr4 = realloc(addr[i], i - tmp);
+		else 
+			addr4 = realloc(addr[i], i + tmp + tmp);
+		i += HEX;
+	}
 	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
-	ft_putstr("\n\n");
-	ft_putstr("first show_alloc_mem() AFTER FIRST non valid realloc()\n");
-	ft_putstr("\n======================================================================\n");
-	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
-	addr2 = realloc(addr1, 800);
+	// show_mem();
+	// addr[102] = realloc(addr[1], 1000);
+	// size_t addr_ptr = (size_t)addr1;
+	// number_to_hex(addr_ptr, 16);
+	// ft_putstr("\n");
+	// ft_putstr("(");
+	// ft_putstr(addr1);
+	// ft_putstr(")");
+	// ft_putstr("\n");
+	// ft_putstr("first show_alloc_mem() BEFORE FIRST valid realloc()\n");
+	// ft_putstr("\n======================================================================\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
+	// ft_putstr("\n\n");
+	// ft_putstr("first show_alloc_mem() AFTER FIRST non valid realloc()\n");
+	// ft_putstr("\n======================================================================\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
+	// addr2 = realloc(addr1, 800);
 
-	ft_putstr("first show_alloc_mem() AFTER SECOND non valid realloc()\n");
-	ft_putstr("\n======================================================================\n");
-	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
+	// ft_putstr("first show_alloc_mem() AFTER SECOND non valid realloc()\n");
+	// ft_putstr("\n======================================================================\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
 
-	ft_putstr("\n-->\n");
-	ft_putstr(addr2);
-	ft_putstr("\n<--\n");
+	// ft_putstr("\n-->\n");
+	// ft_putstr(addr2);
+	// ft_putstr("\n<--\n");
 
-	addr2 = realloc(addr1, 42);
-	ft_putstr("\n-->\n");
-	ft_putstr(addr2);
-	ft_putstr("\n<--\n");
+	// addr2 = realloc(addr1, 42);
+	// ft_putstr("\n-->\n");
+	// ft_putstr(addr2);
+	// ft_putstr("\n<--\n");
 
-	ft_putstr("first show_alloc_mem() AFTER FIRST valid realloc()\n");
-	ft_putstr("\n======================================================================\n");
-	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
+	// ft_putstr("first show_alloc_mem() AFTER FIRST valid realloc()\n");
+	// ft_putstr("\n======================================================================\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
 
-	addr_ptr = (size_t)addr2;
-	number_to_hex(addr_ptr, 16);
-	ft_putstr("\n");
-	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
+	// addr_ptr = (size_t)addr2;
+	// number_to_hex(addr_ptr, 16);
+	// ft_putstr("\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
 
-	addr[101] = malloc(64);
-	ft_memmove(addr[101], "Hello World! 101", 17);
-	ft_putstr(addr[101]);
-	ft_putstr("\n======================================================================\n");
-	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
+	// addr[101] = malloc(64);
+	// ft_memmove(addr[101], "Hello World! 101", 17);
+	// ft_putstr(addr[101]);
+	// ft_putstr("\n======================================================================\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
 
-	addr[102] = realloc(addr[101], 256);
-	ft_putstr(addr[102]);
-	ft_putstr("\n======================================================================\n");
-	show_alloc_mem();
-	ft_putstr("\n======================================================================\n");
+	// addr[102] = realloc(addr[101], 256);
+	// ft_putstr(addr[102]);
+	// ft_putstr("\n======================================================================\n");
+	// show_alloc_mem();
+	// ft_putstr("\n======================================================================\n");
 
 
 	ft_putstr("\n----------------------END MAIN()-------------------------------\n");

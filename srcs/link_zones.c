@@ -15,21 +15,19 @@
 static void create_first_chunk(t_chunk *chunk, size_t size, t_block *head)
 {
 	t_chunk	*new_chunk;
-	void	*tmp_void;
+	void	*tmp;
 
 	head->blc_size -= size + (sizeof(t_chunk) * 2);
-	new_chunk = (chunk + ONE) + size;
-	tmp_void = (void *)chunk;
-	tmp_void += sizeof(t_chunk) + size;
-	new_chunk = tmp_void; 
-	chunk->free = 0;
-	chunk->next = (void *)new_chunk;
-	chunk->prev = NULL;
-	chunk->size = size;
-	new_chunk->size = head->blc_size;
+	tmp = (void *)chunk + size + sizeof(t_chunk);
+	new_chunk = tmp;
 	new_chunk->free = 1;
+	new_chunk->size = head->blc_size;
 	new_chunk->next = NULL;
 	new_chunk->prev = chunk;
+	chunk->free = 0;
+	chunk->size = size;
+	chunk->next = (void *)new_chunk;
+	chunk->prev = NULL;
 }
 
 void	*link_zones(t_block *new_zone, size_t size, short index)

@@ -38,6 +38,33 @@ static void *split_create_new(t_chunk *start, size_t size)
     return (start + ONE);
 }
 
+static int  size_what_index(size_t size, int index)
+{
+    if (index == TINY && size > T_ZONE)
+        return (ONE);
+    else if (index == SMALL && size > S_ZONE)
+        return (ONE);
+    else if (index == LARGE)
+        return (ONE);
+    return (0);
+}
+
+static int  same_index(size_t size, size_t curr_size)
+{
+    int     curr_index;
+    if (curr_size <= T_ZONE)
+        curr_index = 0;
+    else if (curr_size <= S_ZONE)
+        curr_index = 1;
+    else
+        return (1);
+    if (curr_index == 0 && size > T_ZONE)
+        return (0);
+    else if (curr_index == 1 && size > S_ZONE)
+        return (0);
+    return (1);
+}
+
 static void *realloc_handler(void *ptr, size_t size, int index)
 {
     void    *tmp;
@@ -45,13 +72,20 @@ static void *realloc_handler(void *ptr, size_t size, int index)
     t_chunk *curr;
     t_chunk *next;
     int     times;
-
+  
     times = (index == 0) ? 1 : 32;
     tmp = ptr - sizeof(t_chunk);
     curr = (t_chunk *)tmp;
     next = (t_chunk *)curr->next;
     addr = NULL;
-    if (size <= curr->size)
+    if (size_what_index(size, curr->size))
+    {
+        if ((addr = malloc(size)) == NULL)
+            return (ptr);
+        ft_memmove(addr, ptr, curr->size);
+        free(ptr);
+    }
+    else if (size <= curr->size && same_index(size, curr->size))
     {
         /* There is not enough space left to create a new_chunk, so just add them together */
         if ((curr->size - size) > (sizeof(t_chunk) + (MIN_SIZE_ALLOC * times)))
@@ -60,10 +94,7 @@ static void *realloc_handler(void *ptr, size_t size, int index)
             return (ptr);
     }
     else
-    {
         addr = enlarge_mem(curr, next, size, times);
-    }
-    
     return (addr);
 }
 
@@ -72,15 +103,23 @@ void   *realloc(void *ptr, size_t size)
     void    *addr;
     int     index;
 
-    ft_putstr("realloc(mine)\n");
     addr = NULL;
     if (!is_pointer_valid(ptr))
+    {
+        /*
+        ** A call to realloc with a NULL ptr and size > 0 is equal to calling malloc(size)
+        */
+        if (size > 0)
+        {
+            size = (size + 15) & ~15;
+            return (malloc(size));
+        }
         return (NULL);
+    }
     if (size == 0)
         return (malloc_min_size(ptr));
     size = (size + 15) & ~15;
     index = zone_size(size);
     addr = realloc_handler(ptr, size, index);
-    
     return (addr);
 }

@@ -15,12 +15,23 @@
 static void print_block_name(int index, t_block *head)
 {
     char *message[3];
+    t_chunk     *first;
+    int         bloc_free;
 
+    bloc_free = 0;
+    first = (void *)head + sizeof(t_block);
+    if (head != NULL)
+        while (first)
+        {
+            if (!first->free)
+                bloc_free++;
+            first = (t_chunk *)first->next;
+         }
     message[0] = "TINY : ";
     message[1] = "SMALL : ";
     message[2] = "LARGE : ";
     uint64_t size_head;
-    if (head != 0)
+    if (head != 0 && bloc_free > 0)
     {
         size_head = (uint64_t)head; 
         ft_putstr(message[index]);
@@ -59,9 +70,12 @@ static void add_size(size_t *size, t_chunk *chunk)
 
 static void print_details(size_t *total_size)
 {
-    ft_putstr("Total : ");
-    put_number((*total_size));
-    ft_putstr(" octets\n");
+    if (*total_size)
+    {
+      ft_putstr("Total : ");
+      put_number((*total_size));
+      ft_putstr(" octets\n");
+    }
 }
 
 void show_alloc_mem(void)
@@ -76,19 +90,19 @@ void show_alloc_mem(void)
     while (++index < NB_ZONE)
     {
         head = g_zone[index];
+        total_size = 0;
         print_block_name(index, head);
         while (head != NULL)
         {
-            total_size = 0;
             chunk = (void *)head + sizeof(t_block);
             while (chunk != NULL)
             {
-                if (chunk->next != NULL && !chunk->free)
+                if (!chunk->free)
                     add_size(&total_size, chunk);
                 chunk = (t_chunk *)chunk->next;
             }
-            print_details(&total_size);
             head = head->next;
         }
+        print_details(&total_size);
     }
 }

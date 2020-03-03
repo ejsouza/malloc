@@ -43,7 +43,6 @@ static void *merge_next_chunk(t_chunk *start, t_chunk *next, size_t size, int ti
     curr = start;
     if ((start->size + next->size) == size)
     {
-        ft_putstr("THEY ARE THE SAME\n");
         third_chunk = (t_chunk *)next->next;
         start->size += next->size + sizeof(t_chunk); // next->size + sizeof(t_chunk) - blc_size
         start->next = (void *)third_chunk;
@@ -64,7 +63,9 @@ void        *enlarge_mem(t_chunk *start, t_chunk *next, size_t size, int times)
 {
     void    *addr;
     void    *ptr;
+    size_t  base;
 
+    base = (start->size <= T_ZONE) ?  T_ZONE : S_ZONE;
     addr = NULL;
     ptr = (void *)start + sizeof(t_chunk);
     if (!next)
@@ -73,16 +74,16 @@ void        *enlarge_mem(t_chunk *start, t_chunk *next, size_t size, int times)
             return (start + ONE);
         ft_memmove(addr, ptr, start->size);
     }
-    else if (next->free && (start->size + next->size) >= size)
+    else if (next->free && ((start->size + next->size) >= size) && size <= base)
     {
         addr = merge_next_chunk(start, next, size, times);
     }
     else
     {
-       // put_number(next->free);
         if ((addr = malloc(size)) == NULL)
             return (start + ONE);
         ft_memmove(addr, ptr, start->size);
+        free(ptr);
     }
     return (addr);
 }

@@ -43,6 +43,23 @@ size_t	round_block(size_t size)
 	return (number_pages - ONE);
 }
 
+static size_t numb_page_large(size_t size)
+{
+	long long int	size_bytes;
+	size_t			number_pages;
+	size_t			page_size;
+
+	number_pages = 0;
+	page_size = getpagesize();
+	size_bytes = (long long int)size;
+	while (size_bytes > 0)
+	{
+		number_pages++;
+		size_bytes -= page_size;
+	}
+	return (number_pages);
+}
+
 static void	*allocator(size_t size, short index)
 {
 	void		*zone;
@@ -54,7 +71,9 @@ static void	*allocator(size_t size, short index)
 	size_zone = index == 0 ? T_ZONE : S_ZONE;
 	page_size = getpagesize();
 	if (index == LARGE)
-		number_page = round_block(size);
+	{
+		number_page = numb_page_large(size);
+	}
 	else
 	{
 		number_page = page_size / size_zone;

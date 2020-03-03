@@ -20,8 +20,8 @@
 # define S_ZONE				4096
 # define MIN_SIZE_ALLOC		16
 
-# define PAGES_T			(getpagesize() * 26)
-# define PAGES_S			(getpagesize() * 101)
+# define PAGES_T			106496
+# define PAGES_S			413696
 
 typedef struct				s_chunk
 {
