@@ -24,11 +24,21 @@ int					main(int argc, char **argv)
 
 	// ================WORKING ON CALLOC()=======================
 	char addr5 = calloc(4, sizeof(int));
+	char addr6 = calloc(4, sizeof(int));
+	char addr7 = calloc(-5, sizeof(long long int));
+	char addr8 = calloc(5, -1);
+	char addr9 = realloc(addr6, -48);
+	free(NULL);
 	//system("ls");
-
-	addr1 = malloc(736);
-	ft_memmove(addr1, "Hello World!", 13);
+	ft_putstr("Before calling malloc(-736)\n");
+	addr1 = malloc(-736);
+	ft_putstr("After calling malloc(-736)\n");
+	printf("malloc(-736) is null %p\n", addr1);
+	if (addr1)
+		ft_memmove(addr1, "Hello World!", 13);
+	ft_putstr("Trying to write to the addr\n");
 	addr2 = realloc(addr1 + 5, 800);
+	addr2 = realloc(addr1, -800);
 	addr3 = malloc(128);
 	ft_memmove(addr3, "Hello world!", 12);
 	ft_putstr("\n======================================================================\n");

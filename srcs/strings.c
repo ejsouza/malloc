@@ -30,6 +30,22 @@ void		ft_putstr(char *str)
 	write(1, str, ft_strlen(str));
 }
 
+void				ft_bzero(void *s, size_t n)
+{
+	int				i;
+	unsigned char	*str;
+
+	i = 0;
+	str = (unsigned char *)s;
+	while (n)
+	{
+		str[i] = '\0';
+		i++;
+		n--;
+	}
+	s = str;
+}
+
 void				*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	int				i;

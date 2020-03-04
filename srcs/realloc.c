@@ -104,6 +104,8 @@ void   *realloc(void *ptr, size_t size)
     int     index;
 
     addr = NULL;
+    if (size > SIZE_MAX_GUARD)
+        return (NULL);
     if (!is_pointer_valid(ptr))
     {
         /*

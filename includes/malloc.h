@@ -23,6 +23,9 @@
 # define PAGES_T			106496
 # define PAGES_S			413696
 
+#  define SIZE_MAX_GUARD    0xffffffff
+
+
 typedef struct				s_chunk
 {
 	struct s_chunkc			*next;
@@ -68,6 +71,7 @@ void						ft_putstr(char *str);
 void        				put_number(uint64_t number);
 void						*ft_memcpy(void *dst, const void *src, size_t n);
 void						*ft_memmove(void *dst, const void *src, size_t len);
+void						ft_bzero(void *s, size_t n);
 void        				number_to_hex(uint64_t numb, int base);
 
 #endif
