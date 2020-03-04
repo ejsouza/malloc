@@ -1,5 +1,5 @@
 #include "includes/malloc.h"
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <string.h>
 #define TIMES_TO_RUN 5
 #define NINE	9
@@ -22,8 +22,8 @@ int					main(int argc, char **argv)
 		return (1);
 	}
 
-	// Try to reproduce segfault =======================================
-
+	// ================WORKING ON CALLOC()=======================
+	char addr5 = calloc(4, sizeof(int));
 	//system("ls");
 
 	addr1 = malloc(736);
