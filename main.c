@@ -21,28 +21,31 @@ int					main(int argc, char **argv)
 		ft_putstr("usage  <size>\n");
 		return (1);
 	}
-
+	
 	// ================WORKING ON CALLOC()=======================
-	char addr5 = calloc(4, sizeof(int));
-	char addr6 = calloc(4, sizeof(int));
-	char addr7 = calloc(-5, sizeof(long long int));
-	char addr8 = calloc(5, -1);
-	char addr9 = realloc(addr6, -48);
-	char addr10 = reallocf(addr5, 128);
-	char addr11 = reallocf(addr5 + 48, 128);
-	char addr12 = reallocf(addr5, -128);
-	char addr13 = reallocf(addr5, 0);
-	char addr14 = reallocf(addr5, 800);
+	// char addr5 = calloc(4, sizeof(int));
+	// char addr6 = calloc(4, sizeof(int));
+	// char addr7 = calloc(-5, sizeof(long long int));
+	// char addr8 = calloc(5, -1);
+	// char addr9 = realloc(addr6, -48);
+	// char addr10 = reallocf(addr5, 128);
+	// char addr11 = reallocf(addr5 + 48, 128);
+	// char addr12 = reallocf(addr5, -128);
+	// char addr13 = reallocf(addr5, 0);
+	// char addr14 = reallocf(addr5, 800);
+
+	//============= WORKING ON HEXDUMP()=========================
+	char *addr5 = malloc(32);
+	char *addr6 = malloc(57);
+	ft_memmove(addr5, "Testing hexdump function\n", 25);
+	ft_memmove(addr6, "This is another test to see how it shows up on screen tho\n", 57);
+	hexdump(); 
 
 	free(NULL);
 	//system("ls");
-	ft_putstr("Before calling malloc(-736)\n");
 	addr1 = malloc(-736);
-	ft_putstr("After calling malloc(-736)\n");
-	printf("malloc(-736) is null %p\n", addr1);
 	if (addr1)
 		ft_memmove(addr1, "Hello World!", 13);
-	ft_putstr("Trying to write to the addr\n");
 	addr2 = realloc(addr1 + 5, 800);
 	addr2 = realloc(addr1, -800);
 	addr3 = malloc(128);
@@ -60,9 +63,10 @@ int					main(int argc, char **argv)
 	{
 		addr[i] = malloc(i);
 		if (addr[i] != NULL)
-			ft_memmove(addr[i], "Helloc world", 12);
+			ft_memmove(addr[i], "Hello world 42", 14);
 		i += HEX;
 	}
+	hexdump();
 	i = 0;
 	while (i < number_malloc)
 	{
@@ -76,10 +80,12 @@ int					main(int argc, char **argv)
 		else if (!(i % 2) && ((i - tmp) > 0))
 			addr4 = realloc(addr[i], i - tmp);
 		else 
-			addr4 = realloc(addr[i], i + tmp + tmp);
+			free(&addr4[i]);
+			// addr4 = realloc(addr[i], i + tmp + tmp);
 		i += HEX;
 	}
 	show_alloc_mem();
+	hexdump();
 	// show_mem();
 	// addr[102] = realloc(addr[1], 1000);
 	// size_t addr_ptr = (size_t)addr1;

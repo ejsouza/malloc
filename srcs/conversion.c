@@ -60,6 +60,36 @@ void        put_number(uint64_t number)
     reverse_numb(numb);
 }
 
+void        to_hex(uint64_t numb)
+{
+    uint64_t    remainder;
+    int         i;
+    char        number[42];
+    char        hex[17];
+
+    ft_memcpy(hex, "0123456789ABCDEF", 16);
+    ft_bzero(number, 42);
+    i = 0;
+    while (i < 42)
+    {
+        number[i++] = '0';
+    }
+    i = 7;
+    while (numb != 0)
+    {
+        remainder = numb % 16;
+        if (remainder < 10)
+            // number[i++] = 48 + remainder;
+           number[i--] = 48 + remainder;
+        else
+            // number[i++] = hex[remainder];
+           number[i--] = hex[remainder];
+        numb /= 16;
+    }
+    number[8] = 0;
+    ft_putstr(number);
+}
+
 void        number_to_hex(uint64_t numb, int base)
 {
     uint64_t    remainder;
@@ -68,6 +98,7 @@ void        number_to_hex(uint64_t numb, int base)
     char        hex[17];
     
     ft_memcpy(hex, "0123456789ABCDEF", 16);
+    ft_bzero(number, 42);
     number[0] = '0';
     number[1] = 'x';
     i = 10;
