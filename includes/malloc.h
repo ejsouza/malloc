@@ -44,8 +44,9 @@ t_block						*g_zone[NB_ZONE];
 
 void						*malloc(size_t size); // clean the ft_ from the function name
 void						free(void *ptr);		// Dito
-void						*ft_realloc(void *ptr, size_t size);
+void						*realloc(void *ptr, size_t size);
 void 						*calloc(size_t count, size_t size);
+void 						*reallocf(void *ptr, size_t size);
 void						show_alloc_mem(void);
 
 void						*alloc_handler(size_t size, short inde);

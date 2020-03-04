@@ -28,6 +28,12 @@ int					main(int argc, char **argv)
 	char addr7 = calloc(-5, sizeof(long long int));
 	char addr8 = calloc(5, -1);
 	char addr9 = realloc(addr6, -48);
+	char addr10 = reallocf(addr5, 128);
+	char addr11 = reallocf(addr5 + 48, 128);
+	char addr12 = reallocf(addr5, -128);
+	char addr13 = reallocf(addr5, 0);
+	char addr14 = reallocf(addr5, 800);
+
 	free(NULL);
 	//system("ls");
 	ft_putstr("Before calling malloc(-736)\n");

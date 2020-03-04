@@ -28,7 +28,7 @@ void		*malloc(size_t size)
 	void	*addr;
 	short	index;
 
-	printf("in malloc with size %zu\n", size);
+	// printf("in malloc with size %zu\n", size);
 	if (size == 0 || size > SIZE_MAX_GUARD) 
 	{	
 		return (NULL);
@@ -49,6 +49,6 @@ void		*malloc(size_t size)
 	index = zone_size(size);
 	addr = alloc_handler(size, index);
 	// ft_putstr("Exit malloc()\n");
-	printf("exit malloc with the size %zu\n", size);
+	// printf("exit malloc with the size %zu\n", size);
 	return (addr);
 }
