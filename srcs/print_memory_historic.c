@@ -24,13 +24,32 @@ static void read_file(int fd)
     }
 }
 
+void    delete_file(void)
+{
+    char file_name[32];
+    int status;
+
+    create_file_name(file_name);
+    status = remove(file_name);
+    if (status == 0)
+    {
+        write(1, "\033[0;32m", 8);
+        ft_putstr(file_name);
+        ft_putstr(" file deleted successfully.\n");
+        write(1, "\033[0m", 5);
+    }
+    else
+    {
+        write(1, "\033[0;31m", 9);
+        ft_putstr("Unable to delete the file\n\n");
+        write(1, "\033[0m", 5);   
+    }
+}
+
 void    print_memory_historic(void)
 {
     char    file_name[32];
-    // char    buff[80];
-    // char    buf;
     int     fd;
-    // int     ret;
 
     create_file_name(file_name);
     if ((fd = open(file_name, O_RDONLY)) == -1)
@@ -40,21 +59,5 @@ void    print_memory_historic(void)
     }
     ft_putstr("\nMEMORY HISTORY       SIZE\n");
     read_file(fd);
-    // ret = 0;
-    // while ((read(fd, &buf, 1)) > 0)
-    // {
-    //     if (buf != '\n')
-    //     {
-    //         buff[ret] = buf;
-    //         ret++;
-    //     }
-    //     else if (buf == '\n')
-    //     {
-    //         buff[++ret] = '\0';
-    //         ft_putstr(buff);
-    //         ft_putstr("\n");
-    //         ret = 0;
-    //     }
-    // }
     close(fd);
 }

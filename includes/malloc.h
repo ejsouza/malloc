@@ -86,5 +86,6 @@ void						print_itoa(int nb);
 
 void						write_to_file(void *ptr, size_t size);
 void 						create_file_name(char *str);
+void						delete_file(void);
 
 #endif

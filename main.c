@@ -147,7 +147,7 @@ int					main(int argc, char **argv)
 	// show_alloc_mem();
 	// ft_putstr("\n======================================================================\n");
 
-
+	delete_file();
 	ft_putstr("\n----------------------END MAIN()-------------------------------\n");
 
 // 	for (i = 0; i < TIMES_TO_RUN; i++)
