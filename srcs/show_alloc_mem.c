@@ -78,7 +78,7 @@ static void print_details(size_t *total_size)
     }
 }
 
-void show_alloc_mem(void)
+static void show_alloc_mem_twin(void)
 {
     t_block *head;
     t_chunk  *chunk;
@@ -86,7 +86,7 @@ void show_alloc_mem(void)
     size_t  total_size;
 
     head = NULL;
-    total_size = 0;
+    // total_size = 0; // do I need this inicialization here ? if deleted norm ok 25 lines
     index = -1;
     while (++index < NB_ZONE)
     {
@@ -106,4 +106,11 @@ void show_alloc_mem(void)
         }
         print_details(&total_size);
     }
+}
+
+void show_alloc_mem(void)
+{
+    pthread_mutex_lock(&g_mutex);
+    show_alloc_mem_twin();
+    pthread_mutex_unlock(&g_mutex);
 }

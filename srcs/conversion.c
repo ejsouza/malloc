@@ -12,42 +12,6 @@
 
 #include "../includes/malloc.h"
 
-void        print_itoa(int nb)
-{
-    char    numb[15];
-    int     i;
-    int     reminder;
-    int     nb_len;
-
-    ft_bzero(numb, 15);
-    nb_len = int_len(nb);
-    ft_putstr("\nint len = ");
-    put_number(nb_len);
-    ft_putstr("\n");
-    // i = (nb < 0) ? 1 : 0;
-    // numb[0] = (i == 1) ? '-' : '\0';
-    i = 0;
-    // if (nb < 0)
-    // {
-    //     numb[i++] = '-';
-    //     nb_len--;
-    // }
-    while (nb_len != i)
-    {
-        // put_number(nb_len);
-        // ft_putstr("\n");
-        reminder = nb % 10;
-        numb[nb_len] = reminder + '0';
-        // ft_putstr(&numb[nb_len]);
-        // ft_putstr("\n");
-        nb /= 10;
-        nb_len--;
-    }
-    ft_putstr("\n===============================\n");
-    ft_putstr(numb);
-    ft_putstr("===============================\n");
-}
-
 static void reverse_numb(char *nb)
 {
     int  len;
@@ -115,10 +79,8 @@ void        to_hex(uint64_t numb)
     {
         remainder = numb % 16;
         if (remainder < 10)
-            // number[i++] = 48 + remainder;
            number[i--] = 48 + remainder;
         else
-            // number[i++] = hex[remainder];
            number[i--] = hex[remainder];
         numb /= 16;
     }
@@ -138,15 +100,12 @@ void        number_to_hex(uint64_t numb, int base)
     number[0] = '0';
     number[1] = 'x';
     i = 10;
-    //i = 2;
     while (numb != 0 && i < 42)
     {
         remainder = numb % base;
         if (remainder < 10)
-            // number[i++] = 48 + remainder;
            number[i--] = 48 + remainder;
         else
-            // number[i++] = hex[remainder];
            number[i--] = hex[remainder];
         numb /= base;
     }

@@ -46,16 +46,11 @@ static void		is_chunk_free(t_chunk **curr, void **addr, size_t size)
 	}
 }
 
-static void	*find_chunk(t_chunk **chunk, size_t size, t_block *start, int index)
+static void	*find_chunk(t_chunk **chunk, size_t size, t_block *start)
 {
 	void	*addr;
 	t_chunk	*curr;
-	//size_t	address;
-	//address = return_max_position(index);
-	//if (!address)
-		// address = size;
-	if (index)
-		;
+	
 	addr = NULL;
 	curr = (*chunk);
 	while (curr != NULL)
@@ -91,7 +86,7 @@ void	*find_free_space(size_t size, short index)
 		}	
 		tmp = current + ONE;
 		chunk = (t_chunk *)tmp;
-		addr = find_chunk(&chunk, size, current, index);
+		addr = find_chunk(&chunk, size, current);
 		if (addr != NULL)
 			return (addr);
 		// This line doesn't seems to need it

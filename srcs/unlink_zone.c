@@ -38,7 +38,6 @@ static int  space_in_block(t_block *block, int index)
     return (0);
 }
 
-//static void unlink_this(t_block *zone, size_t count, size_t to_free, int index) for the code bellow the comment "========"
 static int unlink_this(t_block *target, t_block *prev, int index, size_t count)
 {
     t_block *tmp;

@@ -120,7 +120,7 @@ int      is_pointer_valid(void *ptr)
     return (0);
 }
 
-void            free(void *ptr)
+static void     free_twin(void *ptr)
 {
     t_chunk     *curr;
     t_chunk     *next;
@@ -147,4 +147,11 @@ void            free(void *ptr)
         next->size = block_head->blc_size;
     if (check_block_header(block_head->blc_size, size_ptr_to_free))
         free_block(block_head, size_ptr_to_free);
+}
+
+void            free(void *ptr)
+{
+    pthread_mutex_lock(&g_mutex);
+    free_twin(ptr);
+    pthread_mutex_unlock(&g_mutex);   
 }

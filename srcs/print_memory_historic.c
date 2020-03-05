@@ -46,7 +46,7 @@ void    delete_file(void)
     }
 }
 
-void    print_memory_historic(void)
+void    print_mem_hist_twin(void)
 {
     char    file_name[32];
     int     fd;
@@ -60,4 +60,11 @@ void    print_memory_historic(void)
     ft_putstr("\nMEMORY HISTORY       SIZE\n");
     read_file(fd);
     close(fd);
+}
+
+void    print_memory_historic(void)
+{
+    pthread_mutex_lock(&g_mutex);
+    print_mem_hist_twin();
+    pthread_mutex_unlock(&g_mutex);
 }
