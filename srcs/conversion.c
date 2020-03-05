@@ -12,6 +12,42 @@
 
 #include "../includes/malloc.h"
 
+void        print_itoa(int nb)
+{
+    char    numb[15];
+    int     i;
+    int     reminder;
+    int     nb_len;
+
+    ft_bzero(numb, 15);
+    nb_len = int_len(nb);
+    ft_putstr("\nint len = ");
+    put_number(nb_len);
+    ft_putstr("\n");
+    // i = (nb < 0) ? 1 : 0;
+    // numb[0] = (i == 1) ? '-' : '\0';
+    i = 0;
+    // if (nb < 0)
+    // {
+    //     numb[i++] = '-';
+    //     nb_len--;
+    // }
+    while (nb_len != i)
+    {
+        // put_number(nb_len);
+        // ft_putstr("\n");
+        reminder = nb % 10;
+        numb[nb_len] = reminder + '0';
+        // ft_putstr(&numb[nb_len]);
+        // ft_putstr("\n");
+        nb /= 10;
+        nb_len--;
+    }
+    ft_putstr("\n===============================\n");
+    ft_putstr(numb);
+    ft_putstr("===============================\n");
+}
+
 static void reverse_numb(char *nb)
 {
     int  len;
@@ -38,7 +74,7 @@ void        put_number(uint64_t number)
     uint64_t remainder;
     size_t      len;
 
-    if (!number)
+    if (number == 0)
     {
         ft_putstr("0");
         return ;

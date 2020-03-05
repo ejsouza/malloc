@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include <sys/resource.h>
 # include <pthread.h>
+# include <fcntl.h>
 #include <stdio.h> //to be deleted
 
 
@@ -23,8 +24,11 @@
 # define PAGES_T			106496
 # define PAGES_S			413696
 
-#  define SIZE_MAX_GUARD    0xffffffff
+# define SIZE_MAX_GUARD    0xffffffff
 
+
+# define S_IROTH 			0000004
+# define S_IWOTH 			0000002
 
 typedef struct				s_chunk
 {
@@ -76,5 +80,10 @@ void						*ft_memmove(void *dst, const void *src, size_t len);
 void						ft_bzero(void *s, size_t n);
 void        				number_to_hex(uint64_t numb, int base);
 void						to_hex(uint64_t number);
+int							int_len(int nb);
+void						print_itoa(int nb);
+
+void						write_to_file(void *ptr, size_t size);
+void 						create_file_name(char *str);
 
 #endif

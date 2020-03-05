@@ -21,6 +21,20 @@ short	zone_size(size_t size)
 	return (LARGE);
 }
 
+int			int_len(int nb)
+{
+	int		i;
+
+	i = 0;
+	if (nb <= i)
+		i = (i < 0) ? 2 : 1;
+	while (nb)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}
 
 void		*malloc(size_t size)
 {
@@ -50,5 +64,6 @@ void		*malloc(size_t size)
 	addr = alloc_handler(size, index);
 	// ft_putstr("Exit malloc()\n");
 	// printf("exit malloc with the size %zu\n", size);
+	write_to_file(addr, size);
 	return (addr);
 }
