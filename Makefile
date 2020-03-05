@@ -18,7 +18,7 @@ HEADER = $(INCLUDE_DIR)/malloc.h
 SRCS = 	ft_malloc.c realloc.c calloc.c alloc_handler.c link_zones.c  \
 		ft_free.c free_block.c split_chunk.c unlink_zone.c show_alloc_mem.c \
 		strings.c conversion.c enlarge_mem.c find_free_space.c hexdump.c \
-		write_to_file.c
+		write_to_file.c print_memory_historic.c
 
 CC = gcc  -I $(INCLUDE_DIR)/malloc.h
 

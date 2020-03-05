@@ -96,7 +96,7 @@ void        write_to_file(void *ptr, size_t size)
     number_2_hex((uint64_t)ptr, 16, addr);
     write_size(str, size);
     ft_putstr_fd(addr, fd);
-    ft_putstr_fd("      ", fd);
+    ft_putstr_fd("          ", fd);
     ft_putstr_fd(str, fd);
     ft_putstr_fd("\n", fd);
     close(fd);

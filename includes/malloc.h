@@ -52,6 +52,7 @@ void						*realloc(void *ptr, size_t size);
 void 						*calloc(size_t count, size_t size);
 void 						*reallocf(void *ptr, size_t size);
 void						show_alloc_mem(void);
+void    					print_memory_historic(void);
 void						hexdump(void);
 
 void						*alloc_handler(size_t size, short inde);
