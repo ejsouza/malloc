@@ -57,6 +57,7 @@ void    					print_memory_historic(void);
 void						hexdump(void);
 
 void						*alloc_handler(size_t size, short inde);
+void						*realloc_handler(void *ptr, size_t size, int index);
 void						*link_zones(t_block *new_zone, size_t size
 		, short index);
 int							unlink_zone(t_block *zone, int index);
@@ -66,6 +67,8 @@ void						update_size_block_head(t_chunk *start); // not in use
 void						free_block(t_block *block_head, size_t size);
 int         				check_block_header(size_t size_head, size_t size_to_free);
 int      					is_pointer_valid(void *ptr);
+void						coalesce(t_chunk *curr, t_chunk *neighbor);
+int							loop_through_block(void *ptr, int index);
 void						*split_chunk(t_chunk *chunk, size_t size);
 void    					*split_to_middle(t_chunk *curr, size_t size);
 void						*enlarge_mem(t_chunk *start, t_chunk *next, size_t size, int times);
@@ -80,6 +83,7 @@ void        				put_number(uint64_t number);
 void						*ft_memcpy(void *dst, const void *src, size_t n);
 void						*ft_memmove(void *dst, const void *src, size_t len);
 void						ft_bzero(void *s, size_t n);
+void						bzero_chunk(t_chunk *chunk);
 void        				number_to_hex(uint64_t numb, int base);
 void						to_hex(uint64_t number);
 int							int_len(int nb);
@@ -88,5 +92,10 @@ void						print_itoa(int nb);
 void						write_to_file(void *ptr, size_t size);
 void 						create_file_name(char *str);
 void						delete_file(void);
+
+
+
+int							same_index(size_t size, size_t curr_size);
+int							size_what_index(size_t size, int index);
 
 #endif

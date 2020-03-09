@@ -49,3 +49,83 @@ void    *split_to_middle(t_chunk *curr, size_t size)
     curr->size = size;
     return (curr + ONE);
 }
+
+
+
+static void     *found_fit(void *ptr, size_t size, size_t size_cp)
+{
+    void        *addr;
+
+    addr = NULL;
+    if ((addr = malloc(size)) == NULL)
+        return (ptr);
+    ft_memmove(addr, ptr, size_cp);
+    free(ptr);
+    return (addr);
+}
+
+static void		*split_create_new(t_chunk *start, size_t size)
+{
+	t_chunk		*next;
+	t_chunk		*new_chunk;
+	void		*tmp;
+	size_t		total_size;
+	t_block		*head;
+
+	next = (t_chunk *)start->next;
+	total_size = (start->size - size) - sizeof(t_chunk);
+	tmp = (void *)start + size + sizeof(t_chunk);
+	new_chunk = tmp;
+	new_chunk->free = 1;
+	new_chunk->size = total_size;
+	new_chunk->next = (void *)next;
+	new_chunk->prev = start;
+	if (next != NULL)
+		next->prev = new_chunk;
+	start->next = (void *)new_chunk;
+	start->size = size;
+	while (next->prev)
+		next = next->prev;
+	head = (void *)next - sizeof(t_block);
+	head->blc_size += total_size;
+	return (start + ONE);
+}
+
+/*
+** In the else if (size <= curr->size && same_index(size, curr->size))
+** There is not enough space left to create a new_chunk, so just
+** add them together.
+*/
+
+void		*realloc_handler(void *ptr, size_t size, int index)
+{
+	void		*tmp;
+	void		*addr;
+	t_chunk		*curr;
+	t_chunk		*next;
+	int			times;
+
+	times = (index == 0) ? 1 : 32;
+	tmp = ptr - sizeof(t_chunk);
+	curr = (t_chunk *)tmp;
+	next = (t_chunk *)curr->next;
+	addr = NULL;
+	if (size_what_index(size, curr->size))
+        return (found_fit(ptr, size, curr->size));
+	// {
+	// 	if ((addr = malloc(size)) == NULL)
+	// 		return (ptr);
+	// 	ft_memmove(addr, ptr, curr->size);
+	// 	free(ptr);
+	// }
+	else if (size <= curr->size && same_index(size, curr->size))
+	{
+		if ((curr->size - size) > (sizeof(t_chunk) + (MIN_SIZE_ALLOC * times)))
+			addr = split_create_new(curr, size);
+		else
+			return (ptr);
+	}
+	else
+		addr = enlarge_mem(curr, next, size, times);
+	return (addr);
+}

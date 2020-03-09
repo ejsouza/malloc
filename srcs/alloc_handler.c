@@ -6,13 +6,13 @@
 /*   By: esouza <esouza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 10:50:53 by esouza            #+#    #+#             */
-/*   Updated: 2020/02/11 10:51:09 by esouza           ###   ########.fr       */
+/*   Updated: 2020/03/09 10:20:48 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-size_t	malloc_base_16(size_t size)
+size_t			malloc_base_16(size_t size)
 {
 	size_t		remainder;
 
@@ -26,7 +26,7 @@ size_t	malloc_base_16(size_t size)
 	return (size);
 }
 
-size_t	round_block(size_t size)
+size_t			round_block(size_t size)
 {
 	size_t	number_pages;
 	size_t	page_size;
@@ -43,7 +43,7 @@ size_t	round_block(size_t size)
 	return (number_pages - ONE);
 }
 
-static size_t numb_page_large(size_t size)
+static size_t	numb_page_large(size_t size)
 {
 	long long int	size_bytes;
 	size_t			number_pages;
@@ -60,7 +60,7 @@ static size_t numb_page_large(size_t size)
 	return (number_pages);
 }
 
-static void	*allocator(size_t size, short index)
+static void		*allocator(size_t size, short index)
 {
 	void		*zone;
 	t_block		*tmp;
@@ -89,16 +89,7 @@ static void	*allocator(size_t size, short index)
 	return (zone);
 }
 
-
-void	init_chunk(t_chunk **chunk, size_t size)
-{
-	(*chunk)->free = 1;
-	(*chunk)->size = size;
-	(*chunk)->next = NULL;
-	(*chunk)->prev = NULL;
-}
-
-void	*alloc_handler(size_t size, short index)
+void			*alloc_handler(size_t size, short index)
 {
 	void	*addr;
 	t_block	*new_zone;
@@ -113,7 +104,7 @@ void	*alloc_handler(size_t size, short index)
 	{
 		if (((new_zone = allocator(size, index)) == NULL))
 			return (NULL);
-			addr = link_zones(new_zone, size, index);
+		addr = link_zones(new_zone, size, index);
 	}
 	return (addr);
 }

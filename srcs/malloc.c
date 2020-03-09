@@ -6,13 +6,13 @@
 /*   By: esouza <esouza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:10:35 by esouza            #+#    #+#             */
-/*   Updated: 2020/03/09 10:10:40 by esouza           ###   ########.fr       */
+/*   Updated: 2020/03/09 13:29:49 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-short	zone_size(size_t size)
+short			zone_size(size_t size)
 {
 	if (size <= T_ZONE)
 		return (TINY);
@@ -21,9 +21,9 @@ short	zone_size(size_t size)
 	return (LARGE);
 }
 
-int			int_len(int nb)
+int				int_len(int nb)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	if (nb <= i)
@@ -36,14 +36,14 @@ int			int_len(int nb)
 	return (i);
 }
 
-static void	*malloc_twin(size_t size)
+static void		*malloc_twin(size_t size)
 {
-	void	*addr;
-	int		index;
+	void		*addr;
+	int			index;
 
 	addr = NULL;
-	if (size == 0 || size > SIZE_MAX_GUARD) 
-	{	
+	if (size == 0 || size > SIZE_MAX_GUARD)
+	{
 		return (NULL);
 	}
 	size = (size + 15) & ~15;
@@ -53,9 +53,9 @@ static void	*malloc_twin(size_t size)
 	return (addr);
 }
 
-void		*malloc(size_t size)
+void			*malloc(size_t size)
 {
-	void	*addr;
+	void		*addr;
 
 	pthread_mutex_lock(&g_mutex);
 	addr = NULL;
