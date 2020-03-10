@@ -76,7 +76,10 @@ static void		*reall_twin(void *ptr, size_t size)
 	}
 	if (size == 0)
 		return (malloc_min_size(ptr));
-	size = (size + 15) & ~15;
+	if (size <= T_ZONE)
+		size = (size + 15) & ~15;
+	else
+		size = (size + 511) & ~511;
 	index = zone_size(size);
 	addr = realloc_handler(ptr, size, index);
 	return (addr);

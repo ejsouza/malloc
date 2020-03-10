@@ -17,11 +17,11 @@
 # define LARGE				2
 # define NB_ZONE			3
 # define MIN_ALLOC			100
-# define T_ZONE				1024
+# define T_ZONE				992
 # define S_ZONE				4096
 # define MIN_SIZE_ALLOC		16
 
-# define PAGES_T			106496
+# define PAGES_T			102400
 # define PAGES_S			413696
 
 # define SIZE_MAX_GUARD    0xffffffff

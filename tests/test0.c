@@ -7,5 +7,4 @@ int		main()
 	while (i < 1024)
 		i++;
 	return (0);
-	return (0);
 }

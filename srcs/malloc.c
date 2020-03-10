@@ -46,7 +46,10 @@ static void		*malloc_twin(size_t size)
 	{
 		return (NULL);
 	}
-	size = (size + 15) & ~15;
+	if (size <= T_ZONE)
+		size = (size + 15) & ~15;
+	else
+		size = (size + 511) & ~511;
 	index = zone_size(size);
 	addr = alloc_handler(size, index);
 	write_to_file(addr, size);

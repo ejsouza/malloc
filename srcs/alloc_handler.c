@@ -96,9 +96,13 @@ void			*alloc_handler(size_t size, short index)
 
 	addr = NULL;
 	if (g_zone[index] == NULL)
+	{
 		addr = NULL;
+	}
 	else if (index != TWO)
+	{
 		addr = find_free_space(size, index);
+	}
 	new_zone = NULL;
 	if (addr == NULL)
 	{
