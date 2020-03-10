@@ -6,62 +6,60 @@
 /*   By: esouza <esouza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:11:22 by esouza            #+#    #+#             */
-/*   Updated: 2020/03/09 10:11:24 by esouza           ###   ########.fr       */
+/*   Updated: 2020/03/10 09:48:02 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void        *split_chunk(t_chunk *chunk, size_t size)
+void			*split_chunk(t_chunk *chunk, size_t size)
 {
-    t_chunk     *curr;
-    t_chunk     *new_chunk;
-    size_t      total_size;
-    void        *tmp;
-    
-    curr = chunk;
-    total_size = curr->size;
-    tmp = (void *)curr + size + sizeof(t_chunk);
-    new_chunk = tmp;
-    new_chunk->free = 1;
-    new_chunk->prev = curr;
-    new_chunk->next = NULL;
-    curr->next = (void *)new_chunk;
-    curr->free = 0;
-    curr->size = size;
-    new_chunk->size = ((total_size - size) - sizeof(t_chunk));
-    return (curr + ONE);
+	t_chunk		*curr;
+	t_chunk		*new_chunk;
+	size_t		total_size;
+	void		*tmp;
+
+	curr = chunk;
+	total_size = curr->size;
+	tmp = (void *)curr + size + sizeof(t_chunk);
+	new_chunk = tmp;
+	new_chunk->free = 1;
+	new_chunk->prev = curr;
+	new_chunk->next = NULL;
+	curr->next = (void *)new_chunk;
+	curr->free = 0;
+	curr->size = size;
+	new_chunk->size = ((total_size - size) - sizeof(t_chunk));
+	return (curr + ONE);
 }
 
-void    *split_to_middle(t_chunk *curr, size_t size)
+void			*split_to_middle(t_chunk *curr, size_t size)
 {
-    t_chunk     *new_chunk;
-    void        *tmp;
+	t_chunk		*new_chunk;
+	void		*tmp;
 
-    tmp = (void *)curr + size + sizeof(t_chunk);
-    new_chunk = tmp;
-    new_chunk->size = curr->size - (size + sizeof(t_chunk));
-    new_chunk->free = 1;
-    new_chunk->prev = curr;
-    new_chunk->next = curr->next;
-    curr->next = (void *)new_chunk;
-    curr->free = 0;
-    curr->size = size;
-    return (curr + ONE);
+	tmp = (void *)curr + size + sizeof(t_chunk);
+	new_chunk = tmp;
+	new_chunk->size = curr->size - (size + sizeof(t_chunk));
+	new_chunk->free = 1;
+	new_chunk->prev = curr;
+	new_chunk->next = curr->next;
+	curr->next = (void *)new_chunk;
+	curr->free = 0;
+	curr->size = size;
+	return (curr + ONE);
 }
 
-
-
-static void     *found_fit(void *ptr, size_t size, size_t size_cp)
+static void		*found_fit(void *ptr, size_t size, size_t size_cp)
 {
-    void        *addr;
+	void		*addr;
 
-    addr = NULL;
-    if ((addr = malloc(size)) == NULL)
-        return (ptr);
-    ft_memmove(addr, ptr, size_cp);
-    free(ptr);
-    return (addr);
+	addr = NULL;
+	if ((addr = malloc(size)) == NULL)
+		return (ptr);
+	ft_memmove(addr, ptr, size_cp);
+	free(ptr);
+	return (addr);
 }
 
 static void		*split_create_new(t_chunk *start, size_t size)
@@ -97,7 +95,7 @@ static void		*split_create_new(t_chunk *start, size_t size)
 ** add them together.
 */
 
-void		*realloc_handler(void *ptr, size_t size, int index)
+void			*realloc_handler(void *ptr, size_t size, int index)
 {
 	void		*tmp;
 	void		*addr;
@@ -111,13 +109,7 @@ void		*realloc_handler(void *ptr, size_t size, int index)
 	next = (t_chunk *)curr->next;
 	addr = NULL;
 	if (size_what_index(size, curr->size))
-        return (found_fit(ptr, size, curr->size));
-	// {
-	// 	if ((addr = malloc(size)) == NULL)
-	// 		return (ptr);
-	// 	ft_memmove(addr, ptr, curr->size);
-	// 	free(ptr);
-	// }
+		return (found_fit(ptr, size, curr->size));
 	else if (size <= curr->size && same_index(size, curr->size))
 	{
 		if ((curr->size - size) > (sizeof(t_chunk) + (MIN_SIZE_ALLOC * times)))

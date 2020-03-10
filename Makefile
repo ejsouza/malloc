@@ -26,7 +26,7 @@ CC = gcc  -I $(INCLUDE_DIR)/malloc.h
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -Iincludes
+CFLAGS = -Wall -Werror -Wextra -mmacosx-version-min=10.10 -Iincludes
 
 $(NAME): $(OBJS:%.o=$(OBJ_DIR)/%.o) $(HEADER) Makefile
 	@$(CC) $(CFLAGS) -o $(NAME) -shared $(OBJS:%.o=$(OBJ_DIR)/%.o)

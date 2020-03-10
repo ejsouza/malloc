@@ -88,6 +88,7 @@ void        				number_to_hex(uint64_t numb, int base);
 void						to_hex(uint64_t number);
 int							int_len(int nb);
 void						print_itoa(int nb);
+void						print_details(size_t *total_size);
 
 void						write_to_file(void *ptr, size_t size);
 void 						create_file_name(char *str);

@@ -6,7 +6,7 @@
 /*   By: esouza <esouza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:11:04 by esouza            #+#    #+#             */
-/*   Updated: 2020/03/09 14:28:15 by esouza           ###   ########.fr       */
+/*   Updated: 2020/03/10 09:24:30 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		*malloc_min_size(void *ptr)
 	return (new_chunk);
 }
 
-int		size_what_index(size_t size, int index)
+int				size_what_index(size_t size, int index)
 {
 	if (index == TINY && size > T_ZONE)
 		return (ONE);
@@ -34,7 +34,7 @@ int		size_what_index(size_t size, int index)
 	return (0);
 }
 
-int		same_index(size_t size, size_t curr_size)
+int				same_index(size_t size, size_t curr_size)
 {
 	int			curr_index;
 
@@ -56,7 +56,7 @@ int		same_index(size_t size, size_t curr_size)
 ** malloc(size)
 */
 
-static void 	*reall_twin(void *ptr, size_t size)
+static void		*reall_twin(void *ptr, size_t size)
 {
 	int			index;
 	void		*addr;
@@ -66,12 +66,13 @@ static void 	*reall_twin(void *ptr, size_t size)
 		return (NULL);
 	if (!is_pointer_valid(ptr))
 	{
+		if (ptr)
+			return (NULL);
 		if (size > 0)
 		{
 			size = (size + 15) & ~15;
 			return (malloc(size));
 		}
-		return (NULL);
 	}
 	if (size == 0)
 		return (malloc_min_size(ptr));
@@ -81,9 +82,9 @@ static void 	*reall_twin(void *ptr, size_t size)
 	return (addr);
 }
 
-void		*realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
-	void	*addr;
+	void		*addr;
 
 	pthread_mutex_lock(&g_mutex);
 	addr = NULL;

@@ -6,19 +6,17 @@
 /*   By: esouza <esouza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:11:40 by esouza            #+#    #+#             */
-/*   Updated: 2020/03/09 10:11:44 by esouza           ###   ########.fr       */
+/*   Updated: 2020/03/10 09:49:26 by esouza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/malloc.h"
 
-size_t			ft_strlen(const char *s)
+size_t				ft_strlen(const char *s)
 {
-	size_t		len;
+	size_t			len;
 
 	len = 0;
-
 	if (s == NULL)
 		return (len);
 	while (*s++)
@@ -26,7 +24,7 @@ size_t			ft_strlen(const char *s)
 	return (len);
 }
 
-void		ft_putstr(char *str)
+void				ft_putstr(char *str)
 {
 	write(1, str, ft_strlen(str));
 }
@@ -68,8 +66,8 @@ void				*ft_memcpy(void *dst, const void *src, size_t n)
 
 void				*ft_memmove(void *dst, const void *src, size_t len)
 {
-	unsigned char			*dst_cpy;
-	unsigned char			*src_cpy;
+	unsigned char	*dst_cpy;
+	unsigned char	*src_cpy;
 
 	src_cpy = (unsigned char *)src;
 	dst_cpy = (unsigned char *)dst;

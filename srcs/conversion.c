@@ -87,6 +87,16 @@ void			to_hex(uint64_t numb)
 	ft_putstr(number);
 }
 
+void			print_details(size_t *total_size)
+{
+	if (*total_size)
+	{
+		ft_putstr("Total : ");
+		put_number((*total_size));
+		ft_putstr(" octets\n");
+	}
+}
+
 void			number_to_hex(uint64_t numb, int base)
 {
 	uint64_t	remainder;
