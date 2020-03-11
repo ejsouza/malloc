@@ -64,16 +64,6 @@ void			coalesce(t_chunk *curr, t_chunk *neighbor)
 		start->next = (void *)tmp;
 		bzero_chunk(neighbor);
 	}
-	else if (curr > neighbor)
-	{
-		start = neighbor;
-		if ((tmp = (t_chunk *)curr->next) != NULL)
-			tmp->prev = start;
-		start->free = 1;
-		start->size += (curr->size + sizeof(t_chunk));
-		start->next = (void *)tmp;
-		bzero_chunk(curr);
-	}
 }
 
 void			bzero_chunk(t_chunk *chunk)

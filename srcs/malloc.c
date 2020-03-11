@@ -42,14 +42,12 @@ static void		*malloc_twin(size_t size)
 	int			index;
 
 	addr = NULL;
-	if (size == 0 || size > SIZE_MAX_GUARD)
-	{
-		return (NULL);
-	}
 	if (size <= T_ZONE)
 		size = (size + 15) & ~15;
 	else
 		size = (size + 511) & ~511;
+	if (size == 0 || size > 1844674407370955161)
+		size = 16;
 	index = zone_size(size);
 	addr = alloc_handler(size, index);
 	write_to_file(addr, size);
@@ -61,7 +59,6 @@ void			*malloc(size_t size)
 	void		*addr;
 
 	pthread_mutex_lock(&g_mutex);
-	addr = NULL;
 	addr = malloc_twin(size);
 	pthread_mutex_unlock(&g_mutex);
 	return (addr);

@@ -35,25 +35,36 @@ int					main(int argc, char **argv)
 	// char addr14 = reallocf(addr5, 800);
 
 	//============= WORKING ON HEXDUMP()=========================
-	char *addr5 = malloc(32);
+	char *addr5 = malloc(-32);
+	if (addr5 == NULL)
+		ft_putstr("malloc(-32) == NULL\n");
+	else
+	{
+		addr5[0] = 42;
+		addr5[1] = '\0';
+		ft_putstr(addr5);
+	}
+	
 	char *addr6 = malloc(57);
-	ft_memmove(addr5, "Testing hexdump function\n", 25);
+	ft_memmove(addr5, "this addres has 16\n", 16);
 	ft_memmove(addr6, "This is another test to see how it shows up on screen tho\n", 57);
 	hexdump();
 
 	print_memory_historic();
 
 	free(NULL);
+
 	//system("ls");
 	addr1 = malloc(-736);
-	if (addr1)
-		ft_memmove(addr1, "Hello World!", 13);
-	addr2 = realloc(addr1 + 5, 800);
-	addr2 = realloc(addr1, -800);
-	addr3 = malloc(128);
-	ft_memmove(addr3, "Hello world!", 12);
-	show_alloc_mem();
-	ft_putstr("\n");
+	// if (addr1)
+	// ft_memmove(addr1, "Hello World!", 13);
+	// ft_putstr("\n---------------------------------\n");	
+	// addr2 = realloc(addr1 + 5, 800);
+	// // addr2 = realloc(addr1, -800);
+	// addr3 = malloc(128);
+	// ft_memmove(addr3, "Hello world!", 12);
+	// show_alloc_mem();
+	// ft_putstr("\n");
 
 //	size_t number_malloc = 12178;
 	size_t number_malloc = 5000;
@@ -72,6 +83,9 @@ int					main(int argc, char **argv)
 	i = 0;
 	while (i < number_malloc)
 	{
+		addr4 = (char *)malloc(i);
+		if (addr4)
+			ft_memmove(addr4, "Hello World!", 12);
 		int tmp = i % 2;
 		if (tmp)
 			tmp = HEX + NINE;
@@ -83,13 +97,12 @@ int					main(int argc, char **argv)
 			addr4 = realloc(addr[i], i - tmp);
 		else 
 			free(&addr4[i]);
-			// addr4 = realloc(addr[i], i + tmp + tmp);
+			addr4 = realloc(addr[i], i + tmp + tmp);
 		i += HEX;
 	}
 	show_alloc_mem();
 	hexdump();
 	print_memory_historic();
-	// show_mem();
 	// addr[102] = realloc(addr[1], 1000);
 	// size_t addr_ptr = (size_t)addr1;
 	// number_to_hex(addr_ptr, 16);

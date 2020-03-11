@@ -32,9 +32,9 @@ static void		reverse_numb(char *nb)
 
 void			put_number(uint64_t number)
 {
-	char		numb[20];
+	char		numb[48];
 	int			i;
-	uint64_t	max_val;
+	// uint64_t	max_val;
 	uint64_t	remainder;
 	size_t		len;
 
@@ -44,9 +44,6 @@ void			put_number(uint64_t number)
 		return ;
 	}
 	i = 0;
-	max_val = (uint64_t)1844674407370955161;
-	if (number > max_val)
-		return ;
 	while (number != 0)
 	{
 		remainder = number % 10;

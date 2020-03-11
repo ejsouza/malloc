@@ -22,7 +22,7 @@ static void			print_block_name(int index, t_block *head)
 	bloc_free = 0;
 	first = (void *)head + sizeof(t_block);
 	if (head != NULL)
-		while (first)
+		while (first->next != NULL)
 		{
 			if (!first->free)
 				bloc_free++;

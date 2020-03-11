@@ -62,8 +62,6 @@ static void		*reall_twin(void *ptr, size_t size)
 	void		*addr;
 
 	addr = NULL;
-	if (size > SIZE_MAX_GUARD)
-		return (NULL);
 	if (!is_pointer_valid(ptr))
 	{
 		if (ptr)
@@ -90,7 +88,6 @@ void			*realloc(void *ptr, size_t size)
 	void		*addr;
 
 	pthread_mutex_lock(&g_mutex);
-	addr = NULL;
 	addr = reall_twin(ptr, size);
 	pthread_mutex_unlock(&g_mutex);
 	return (addr);

@@ -18,10 +18,6 @@ static void		*calloc_twin(size_t count, size_t size)
 	void		*ptr;
 
 	ptr = NULL;
-	if (count == 0 || size == 0)
-		return (NULL);
-	else if (count > SIZE_MAX_GUARD || size > SIZE_MAX_GUARD)
-		return (NULL);
 	request_size = count * size;
 	if ((ptr = malloc(request_size)) == NULL)
 		return (NULL);
@@ -49,7 +45,12 @@ void			*calloc(size_t count, size_t size)
 	void		*ptr;
 
 	pthread_mutex_lock(&g_mutex);
-	ptr = NULL;
+	if (count  <= T_ZONE)
+		count = (count + 15) & ~15;
+	else
+		count = (count + 511) & ~511;
+	if (count == 0)
+		count = 16;
 	ptr = calloc_twin(count, size);
 	pthread_mutex_unlock(&g_mutex);
 	return (ptr);
@@ -68,7 +69,6 @@ void			*reallocf(void *ptr, size_t size)
 	void		*new_ptr;
 
 	pthread_mutex_lock(&g_mutex);
-	new_ptr = NULL;
 	new_ptr = realloc(ptr, size);
 	free(ptr);
 	pthread_mutex_unlock(&g_mutex);

@@ -25,11 +25,11 @@ static void		is_chunk_free(t_chunk **curr, void **addr, size_t size)
 		(*curr)->free = 0;
 		*addr = (*curr) + ONE;
 	}
-	else if ((*curr)->size > (size + sizeof(t_chunk)) && (*curr)->next == NULL)
+	else if ((*curr)->size > (size + sizeof(t_chunk) + MIN_SIZE_ALLOC) && (*curr)->next == NULL)
 	{
 		*addr = split_chunk(*curr, size);
 	}
-	else if ((*curr)->size > (size + sizeof(t_chunk)) && (*curr)->next != NULL)
+	else if ((*curr)->size > (size + sizeof(t_chunk) + MIN_SIZE_ALLOC) && (*curr)->next != NULL)
 	{
 		*addr = split_to_middle(*curr, size);
 	}
@@ -48,9 +48,7 @@ static void		*find_chunk(t_chunk **chunk, size_t size, t_block *start)
 	curr = (*chunk);
 	while (curr != NULL)
 	{
-		// if (curr->free && (((size_t)curr + size + 32 + MIN_SIZE_ALLOC * 2)
-					// <= limit))
-		if (curr->free)
+		if (curr->free &&  curr->size >= (size + sizeof(t_chunk)))
 		{
 			is_chunk_free(&curr, &addr, size);
 			if (addr != NULL)

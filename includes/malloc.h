@@ -45,7 +45,7 @@ typedef struct				s_block
 }							t_block;
 
 t_block						*g_zone[NB_ZONE];
-pthread_mutex_t 			g_mutex;
+static pthread_mutex_t 			g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void						*malloc(size_t size); // clean the ft_ from the function name
 void						free(void *ptr);		// Dito

@@ -26,10 +26,10 @@ void			*split_chunk(t_chunk *chunk, size_t size)
 	new_chunk->free = 1;
 	new_chunk->prev = curr;
 	new_chunk->next = NULL;
+	new_chunk->size = ((total_size - size) - sizeof(t_chunk));
 	curr->next = (void *)new_chunk;
 	curr->free = 0;
 	curr->size = size;
-	new_chunk->size = ((total_size - size) - sizeof(t_chunk));
 	return (curr + ONE);
 }
 
