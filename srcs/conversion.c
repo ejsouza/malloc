@@ -34,7 +34,6 @@ void			put_number(uint64_t number)
 {
 	char		numb[48];
 	int			i;
-	// uint64_t	max_val;
 	uint64_t	remainder;
 	size_t		len;
 
