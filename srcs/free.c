@@ -67,7 +67,9 @@ static void			free_twin(void *ptr)
 	size_t			size_ptr_to_free;
 
 	if (ptr == 0 || !is_pointer_valid(ptr))
+	{
 		return ;
+	}
 	curr = (t_chunk *)ptr - ONE;
 	next = (t_chunk *)curr->next;
 	size_ptr_to_free = curr->size;

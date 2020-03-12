@@ -42,7 +42,7 @@ static void		*malloc_twin(size_t size)
 	int			index;
 
 	addr = NULL;
-	if (size <= T_ZONE)
+	if (size <= S_ZONE)
 		size = (size + 15) & ~15;
 	else
 		size = (size + 511) & ~511;
@@ -53,6 +53,12 @@ static void		*malloc_twin(size_t size)
 	write_to_file(addr, size);
 	return (addr);
 }
+
+/*
+** ATTENTION: do NOT forget to uncomment line 53.
+** This line was comment just for the purpose of the tests.
+** This line makes my project NON norm.
+*/
 
 void			*malloc(size_t size)
 {

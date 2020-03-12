@@ -45,7 +45,7 @@ void			*calloc(size_t count, size_t size)
 	void		*ptr;
 
 	pthread_mutex_lock(&g_mutex);
-	if (count  <= T_ZONE)
+	if (count <= T_ZONE)
 		count = (count + 15) & ~15;
 	else
 		count = (count + 511) & ~511;
